@@ -9,3 +9,24 @@
                 0px 1px 3px 0px rgba(0,0,0,0.02),
                 inset 0 0 0 1px #d8dada;
   }
+
+  @layer utilities {
+  .display-heading {
+    @apply  text-display-heading font-heading leading-heading;
+  }
+  .section-heading {
+    @apply  text-section-heading font-heading leading-heading;
+  }
+  .sub-section-heading {
+    @apply  text-sub-section-heading font-heading leading-heading;
+  }
+  .body-text {
+    @apply  text-body font-body leading-body;
+  }
+  .caption-text {
+    @apply  text-caption font-body leading-body;
+  }
+  .emphasis-text {
+    @apply font-emphasis;
+  }
+}

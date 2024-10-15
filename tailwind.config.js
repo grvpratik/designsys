@@ -8,6 +8,11 @@ export default {
 				sans: ["Inter var", ...defaultTheme.fontFamily.sans],
 				// Add more custom font families here
 			},
+			borderRadius: {
+				"button-sm": "calc(8/16 * 1rem)",
+				"button-md": "calc(10/16 * 1rem)",
+				"button-lg": "calc(12/16 * 1rem)",
+			},
 			spacing: {
 				s: "calc(8 / var(--rem) * 1rem)",
 				m: "calc(16 / var(--rem) * 1rem)",

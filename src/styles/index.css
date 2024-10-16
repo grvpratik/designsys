@@ -3,6 +3,74 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+
+:root { 
+  
   --rem: 16;
+
+ 
+  /* Foreground Colors */
+  --ui-color-foreground-primary: #000000; /* Main color for content throughout the interface. Use for body text or titles. */
+  --ui-color-foreground-secondary: #4D4D4D; /* Use for secondary content that is not critical to understanding the flow of the interface. */
+  --ui-color-foreground-muted: #808080; /* Use for placeholder text or as the default color for icons. */
+  --ui-color-foreground-inverted: #FFFFFF; /* Use on elements with "background-inverted", like toasts or tooltips. */
+  --ui-color-foreground-accent: #0066CC; /* Use for interactive text or icons like links or buttons. */
+  --ui-color-foreground-accent-inverted: #FFFFFF; /* Pair with "background-accent-inverted" to highlight icons, buttons or interactive parts of the interface. */
+  --ui-color-foreground-success: #28A745; /* Use for positive or successful messages. For example, task completion. */
+  --ui-color-foreground-success-inverted: #FFFFFF; /* Pair with "background-success-inverted" to highlight a positive or successful message. */
+  --ui-color-foreground-warning: #FFC107; /* Use for messages that require the user's attention or pending statuses. */
+  --ui-color-foreground-danger: #DC3545; /* Use for a negative or dangerous situation where an action is required. */
+  --ui-color-foreground-danger-inverted: #FFFFFF; /* Pair with "background-danger-inverted" to highlight a negative or dangerous situation. */
+  --ui-color-foreground-info: #17A2B8; /* Use it for an informative state on the info background. */
+  --ui-color-foreground-info-inverted: #FFFFFF; /* Pair with "background-info-inverted" to highlight an informative situation. */
+
+  /* Background Colors */
+  --ui-color-background-primary: #FFFFFF; /* Primary background color for the entire user interface. */
+  --ui-color-background-raised: #F8F9FA; /* Use to level up content across the page, like in a card. */
+  --ui-color-background-inset: #E9ECEF; /* Use to create a higher contrast when you stack multiple surfaces, like forms inside cards. */
+  --ui-color-background-hover: #F1F3F5; /* Use for hover state on all neutral backgrounds. */
+  --ui-color-background-active: #E2E6EA; /* Use for active state on all neutral backgrounds. */
+  --ui-color-background-backdrop: rgba(0, 0, 0, 0.5); /* Use for modal backdrops to distinguish them from the layer underneath. */
+  --ui-color-background-placeholder: #CED4DA; /* Use as the default background color to represent placeholders. */
+  --ui-color-background-neutral: #6C757D; /* Use as the default background for components that need to be placed over all surfaces, like badges. */
+  --ui-color-background-highlight: #E9ECEF; /* Use for elements that need to stand out against the interface, but don't require immediate action (e.g., checkboxes, radio buttons). */
+  --ui-color-background-inverted: #343A40; /* Use when you need to highlight surfaces and bring the contrast up, like with tooltips. */
+  --ui-color-background-inverted-hover: #495057; /* Use for hover state on the inverted background. */
+  --ui-color-background-inverted-active: #212529; /* Use for active state on the inverted background. */
+  --ui-color-background-accent: #007BFF; /* Use for interactive elements like buttons or links. */
+  --ui-color-background-accent-hover: #0056B3; /* Use for hover state on the accent background. */
+  --ui-color-background-accent-active: #004085; /* Use for active state on the accent background. */
+  --ui-color-background-accent-inverted: #B8DAFF; /* Pair with "foreground-accent-inverted" to highlight icons, buttons or interactive parts of the interface. */
+  --ui-color-background-accent-inverted-hover: #9FCDFF; /* Use for hover state on the "accent-inverted" background. */
+  --ui-color-background-accent-inverted-active: #86BFFF; /* Use for active state on the "accent-inverted" background. */
+  --ui-color-background-success: #D4EDDA; /* Use for positive or successful messages. For example, task completion or changes saved. */
+  --ui-color-background-success-hover: #C3E6CB; /* Use for hover state on the success background. */
+  --ui-color-background-success-active: #B1DFBB; /* Use for active state on the success background. */
+  --ui-color-background-success-inverted: #155724; /* Pair with "foreground-success-inverted" to highlight a positive or successful message. */
+  --ui-color-background-warning: #FFF3CD; /* Use to highlight messages that require the user's attention or pending statuses. */
+  --ui-color-background-warning-hover: #FFEEBA; /* Use for hover state on the warning background. */
+  --ui-color-background-warning-active: #FFE8A1; /* Use for active state on the warning background. */
+  --ui-color-background-warning-inverted: #856404; /* Pair with "foreground-warning" to highlight messages that require the user's attention or pending statuses. */
+  --ui-color-background-danger: #F8D7DA; /* Use to highlight a negative or dangerous situation where an action is required. */
+  --ui-color-background-danger-hover: #F5C6CB; /* Use for hover state on the danger background. */
+  --ui-color-background-danger-active: #F1B0B7; /* Use for active state on the danger background. */
+  --ui-color-background-danger-inverted: #721C24; /* Pair with "foreground-danger-inverted" to highlight a negative or dangerous situation. */
+  --ui-color-background-danger-inverted-hover: #8B2129; /* Use for hover state on the "danger-inverted" background. */
+  --ui-color-background-danger-inverted-active: #A52A35; /* Use for active state on the "danger-inverted" background. */
+  --ui-color-background-info: #D1ECF1; /* Use for informative or neutral messages. */
+  --ui-color-background-info-hover: #BEE5EB; /* Use for hover state on the info background. */
+  --ui-color-background-info-active: #ABDDE5; /* Use for active state on the info background. */
+  --ui-color-background-info-inverted: #0C5460; /* Pair with "foreground-info-inverted" to highlight an informative message. */
+
+  /* Border Colors */
+  --ui-color-border-primary: #DEE2E6; /* Use to frame your content. Default borders are critical to understanding a page layout. */
+  --ui-color-border-primary-hover: #CED4DA; /* Use to highlight the hover state on the primary border color. */
+  --ui-color-border-secondary: #E9ECEF; /* Use for dividers to suggest a separation among components, like table rows. */
+  --ui-color-border-highlight: #80BDFF; /* Use for small interactive elements that need to be highlighted on the interface, like checkboxes or radio buttons. */
+  --ui-color-border-accent: #007BFF; /* Use for interactive elements like buttons or links. */
+  --ui-color-border-success: #28A745; /* Use for positive or successful messages. For example, task completion or changes saved. */
+  --ui-color-border-warning: #FFC107; /* Use to highlight messages that require the user's attention or pending statuses. */
+  --ui-color-border-danger: #DC3545; /* Use to emphasize a negative or dangerous situation where an action is required. */
+  --ui-color-border-info: #17A2B8; /* Use for informative or neutral messages. */
+
 }

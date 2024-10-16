@@ -1,4 +1,13 @@
-=mobile navigation
+~~from previous project
+:mobile navigation
+:landing page
+:buttons
+:data fetching and mutations
+:laoding section and pages
+
+
+
+=
 =modal
 =full page laoding
 ==section laoding

@@ -7,9 +7,9 @@ type ButtonSize = "sm" | "md" | "lg";
 type ButtonVariant = "default" | "primary" | "secondary" | "danger" | "plain";
 
 const sizeClasses: Record<ButtonSize, string> = {
-	sm: "h-8 px-3 text-sm rounded-button-sm",
-	md: "h-10 px-4 text-base rounded-button-md",
-	lg: "h-12 px-6 text-lg rounded-button-lg",
+	sm: "h-[32px] px-[6px] p-s text-sm rounded-button-sm",
+	md: "h-[40px]  px-[10px] p-m text-base rounded-button-md",
+	lg: "h-[48px]  px-[14px]  text-lg rounded-button-lg",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,13 +33,15 @@ const Button: React.FC<ButtonProps> = ({
 	...props
 }) => {
 	const baseClasses =
-		"inline-flex items-center justify-center font-medium transition-colors duration-200";
+		"inline-flex  flex-shrink-0  font-medium leading-[1.5] items-center justify-center custom-shadowx  transition-colors duration-200";
 
 	const variantClasses: Record<ButtonVariant, string> = {
-		default: "bg-white text-gray-900 border border-gray-300 hover:bg-gray-100",
-		primary: "bg-emerald-600 text-white hover:bg-emerald-700",
+		default:
+			" bg-background-primary text-foreground-primary border border-border-primary hover:bg-background-hover",
+		primary:
+			"bg-background-accent text-foreground-accent-inverted hover:bg-background-accent-hover active:bg-background-accent-active",
 		secondary:
-			"bg-white text-emerald-600 border border-emerald-600 hover:bg-emerald-50",
+			"bg-background-primary text-foreground-accent border border-border-primary hover:bg-background-hover",
 		danger: "bg-red-600 text-white hover:bg-red-700",
 		plain: "bg-transparent text-gray-600 hover:bg-gray-100",
 	};

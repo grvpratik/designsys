@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 
-:root { 
+ :root { 
   
   --rem: 16;
 
@@ -73,4 +73,4 @@
   --ui-color-border-danger: #DC3545; /* Use to emphasize a negative or dangerous situation where an action is required. */
   --ui-color-border-info: #17A2B8; /* Use for informative or neutral messages. */
 
-}
+} 

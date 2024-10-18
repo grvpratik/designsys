@@ -4,7 +4,7 @@ import { ModeToggle } from "../components/mode-toggle";
 
 export default function HomePage() {
 	return (
-		<div className="flex gap-2 p-4 flex-col">
+		<div className="flex gap-2 p-4 dark:bg-background-primary  ">
 			<ModeToggle/>
 			{/* <button className="custom-shadow inline-flex items-center h-[34px]  leading-[1.5] p-s rounded-button-sm font-medium text-black bg-white   hover:bg-gray-50 active:bg-gray-100 transition duration-200  ">
 				Default

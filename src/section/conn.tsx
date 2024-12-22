@@ -38,7 +38,7 @@ const Conn = () => {
         signAndSend()
     }, [publicKey]);
   return (
-      <div className="flex justify-between border-b pb-2 pt-2">
+      <div className="flex justify-between border-b pb-2 pt-2 flex-col">
           <div className="text-2xl pl-4 flex justify-center pt-3">
               Turkify
           </div>
@@ -48,7 +48,10 @@ const Conn = () => {
 
 
           </div>
-          <SolanaTransactions address=""  rpcUrl=""/>
+          <div>
+              
+          </div>
+          <SolanaTransactions address="615wod1Ru2j6HeXY97ufNWoKygBc7awqA4hW74evWPBm"  />
       </div>
   )
 }

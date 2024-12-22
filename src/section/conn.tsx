@@ -7,21 +7,19 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useMemo } from 'react';
 import axios from 'axios';
 import bs58 from "bs58"
+import SolanaTransactions from './transaction';
 const Conn = () => {
     const BACKEND_URL = ""
     const { publicKey, signMessage } = useWallet();
 
     async function signAndSend() {
         if (!publicKey) {
+            
             return;
         }
         const now = new Date();
         const date = now.toISOString();
-        const mess = `URI: mefoundation.com
-Issued At: ${date}
-Chain ID: sol 
-Allocation Wallet:CS1z9NZRURVMbvYuhUdMbH7cSrkyxTha1JED4Q3LoMAa 
-Claim Wallet:8rgpceMwuwj1jtWq6YS2StR9BxEhT9PgpmGDTSs5ijFX`;
+        const mess = ``;
 
         const message = new TextEncoder().encode(mess);
         const signature = await signMessage?.(message);
@@ -46,7 +44,11 @@ Claim Wallet:8rgpceMwuwj1jtWq6YS2StR9BxEhT9PgpmGDTSs5ijFX`;
           </div>
           <div className="text-xl pr-4 pb-2">
               {publicKey ? <WalletDisconnectButton /> : <WalletMultiButton />}
+
+
+
           </div>
+          <SolanaTransactions address=""  rpcUrl=""/>
       </div>
   )
 }

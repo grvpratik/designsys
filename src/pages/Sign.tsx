@@ -18,7 +18,7 @@ const SignPage = () => {
     const network = WalletAdapterNetwork.Mainnet;
 
     // You can also provide a custom RPC endpoint.
-    const endpoint = "https://mainnet.helius-rpc.com/?api-key=6edb4a3c-ac78-4b3d-93bc-fe905901735e";
+    const endpoint = "https://mainnet.helius-rpc.com/?api-key=";
 
     const wallets = useMemo(
         () => [],

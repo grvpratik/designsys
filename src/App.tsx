@@ -4,6 +4,7 @@ import HomePage from "./pages/Home";
 import "./styles/App.css";
 import { ThemeProvider } from "./components/theme-provider";
 import SignPage from "./pages/Sign";
+import ProjectIdeaAnalyzer from "./pages/Dev";
 function App() {
 	return (
 		<>
@@ -12,7 +13,9 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-							<Route path="/sign" element={<SignPage />} />
+						<Route path="/sign" element={<SignPage />} />
+						<Route path="/dev" element={<ProjectIdeaAnalyzer />} />
+
 					</Routes>
 				</BrowserRouter>
 			</ThemeProvider>

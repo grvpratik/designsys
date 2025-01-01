@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Loader2 } from 'lucide-react';
 import axios from 'axios';
 import MarkdownRenderer from '../components/markdown';
@@ -16,7 +16,7 @@ const AnalysisDisplay = () => {
 
     const fetchAnalysisData = async () => {
         try {
-            const response = await axios.get('http://localhost:40525/ai', {
+            const response = await axios.get('http://localhost:8787/ai', {
 
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,46 +56,9 @@ const AnalysisDisplay = () => {
         );
     }
 
-    // Convert markdown to HTML - You'll need to actually implement this
-    // using a library like marked or react-markdown in your project
-    // const renderMarkdown = (markdown) => {
-    //     return <div dangerouslySetInnerHTML={{ __html: markdown }} />;
-    // };
+
     console.log(analysisData?.overview?.response)
-    // const parseBulletPoints = (text) => {
-    //     if (!text) return [];
 
-    //     const lines = text.split('\n').filter(line => line.trim());
-    //     const sections = [];
-    //     let currentSection = null;
-
-    //     lines.forEach(line => {
-    //         // Check if line is a main section (bold text with colon)
-    //         if (line.includes(':**')) {
-    //             if (currentSection) {
-    //                 sections.push(currentSection);
-    //             }
-    //             currentSection = {
-    //                 title: line.split(':**')[0].replace('**', '').trim(),
-    //                 items: []
-    //             };
-    //         }
-    //         // Check if line is a bullet point
-    //         else if (line.includes('* **')) {
-    //             const [label, value] = line.split(':**');
-    //             currentSection.items.push({
-    //                 label: label.replace('* **', '').trim(),
-    //                 value: value ? value.trim() : ''
-    //             });
-    //         }
-    //     });
-
-    //     if (currentSection) {
-    //         sections.push(currentSection);
-    //     }
-
-    //     return sections;
-    // };
 
     const sections = [
         { id: 'overview', title: 'Overview', content: analysisData?.overview?.response },

@@ -6,6 +6,131 @@ import { Badge } from '../components/ui/badge';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Loader2, AlertTriangle, CheckCircle2, Clock, Gem } from 'lucide-react';
+import axios from 'axios';
+interface ProductAnalysis {
+    metadata: {
+        id: string;
+        timestamp: string;
+        version: string;
+    };
+
+    overview: {
+        marketAnalysis: {
+            marketFit: string;
+            potentialScore: number;
+            timeToMarket: string;
+        };
+        complexity: {
+            implementation: number;
+            technical: number;
+            resourceRequirements: string;
+        };
+        competition: {
+            landscapeDescription: string;
+            competitionLevel: 'low' | 'moderate' | 'high';
+        };
+        viabilityScore: number;
+    };
+
+    features: {
+        core: Array<{
+            id: string;
+            name: string;
+            description: string;
+            priority: 'must-have' | 'should-have' | 'nice-to-have';
+            complexity: number;
+            status: 'planned' | 'in-development' | 'completed';
+            estimatedDevelopmentTime: string;
+        }>;
+    };
+
+    technology: {
+        infrastructure: {
+            recommended: Array<string>;
+            alternatives: Array<string>;
+            selfHosted: Array<string>;
+        };
+        stack: {
+            frontend: Array<string>;
+            backend: Array<string>;
+            database: Array<string>;
+            services: Array<string>;
+        };
+        requirements: {
+            hosting: string;
+            storage: string;
+            computing: string;
+            scaling: string;
+        };
+    };
+
+    marketAnalysis: {
+        competitors: Array<{
+            id: string;
+            name: string;
+            description: string;
+            website: string;
+            metrics: {
+                userBase: string;
+                marketShare?: number;
+                pricing?: {
+                    min: number;
+                    max: number;
+                    currency: string;
+                };
+            };
+            features: Array<string>;
+            strengths: Array<string>;
+            weaknesses: Array<string>;
+        }>;
+        opportunities: {
+            gaps: Array<string>;
+            innovations: Array<string>;
+            trends: Array<string>;
+        };
+        risks: Array<{
+            description: string;
+            impact: 'low' | 'medium' | 'high';
+            likelihood: 'low' | 'medium' | 'high';
+            mitigation: string;
+        }>;
+    };
+
+    businessModel: {
+        revenue: {
+            streams: Array<{
+                type: string;
+                description: string;
+                potential: number;
+            }>;
+            pricing: {
+                model: string;
+                tiers: Array<{
+                    name: string;
+                    price: number;
+                    features: Array<string>;
+                }>;
+            };
+        };
+        costs: {
+            fixed: Array<{
+                category: string;
+                description: string;
+                estimatedCost: number;
+            }>;
+            variable: Array<{
+                category: string;
+                description: string;
+                unitCost: number;
+            }>;
+        };
+        metrics: {
+            targetCAC: number;
+            targetLTV: number;
+            targetMargin: number;
+        };
+    };
+}
 
 const PriorityBadge = ({ priority }) => {
     const colors = {
@@ -39,19 +164,31 @@ const StatusBadge = ({ status }) => {
 };
 
 const ProductAnalysisDashboard = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState(null as ProductAnalysis | null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        console.log("useEffect")
         fetchData();
     }, []);
 
     const fetchData = async () => {
         try {
-            const response = await fetch('YOUR_API_ENDPOINT');
-            if (!response.ok) throw new Error('Failed to fetch data');
-            const result = await response.json();
+            const response = await axios.get('http://localhost:8787/gemini', {
+
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+            });
+
+console.log(await response,"REsponse")
+
+            if (response.status !== 200) throw new Error('Failed to fetch data');
+            
+            const result = await response.data;
+            console.log(result,"result")
             setData(result);
         } catch (err) {
             setError(err.message);

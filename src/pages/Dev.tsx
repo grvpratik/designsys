@@ -4,9 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Progress } from '../components/ui/progress';
 import { Badge } from '../components/ui/badge';
 import { Alert, AlertDescription } from '../components/ui/alert';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Loader2, AlertTriangle, CheckCircle2, Clock, Gem } from 'lucide-react';
 import axios from 'axios';
+import { Textarea } from '../components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Button } from '../components/ui/button';
+
 interface ProductAnalysis {
     metadata: {
         id: string;
@@ -165,36 +168,42 @@ const StatusBadge = ({ status }) => {
 
 const ProductAnalysisDashboard = () => {
     const [data, setData] = useState(null as ProductAnalysis | null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [projectIdea, setProjectIdea] = useState('');
+    const [detailedIdea, setDetailedIdea] = useState('basic');
+    const [learningPurpose, setLearningPurpose] = useState('personal');
 
-    useEffect(() => {
-        console.log("useEffect")
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
+    const analyzeIdea = async (idea: string) => {
+        setLoading(true);
+        setError(null);
         try {
-            const response = await axios.get('http://localhost:8787/gemini', {
-
+            const response = await axios.post('http://localhost:8787/gemini', {
+                idea,
+                detailLevel: detailedIdea,
+                learningPurpose
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
 
             });
-
-console.log(await response,"REsponse")
-
+            console.log(response, 'response')
             if (response.status !== 200) throw new Error('Failed to fetch data');
-            
+
             const result = await response.data;
-            console.log(result,"result")
             setData(result);
-        } catch (err) {
+        } catch (err: any) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleIdeaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const idea = e.target.value;
+        setProjectIdea(idea);
+        
     };
 
     if (loading) {
@@ -216,248 +225,314 @@ console.log(await response,"REsponse")
 
     return (
         <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
-            {/* Header Section */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold">{data.metadata.id}</h1>
-                    <p className="text-gray-500">Last updated: {new Date(data.metadata.timestamp).toLocaleString()}</p>
-                </div>
-                <Badge variant="secondary">v{data.metadata.version}</Badge>
-            </div>
-
-            <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="features">Features</TabsTrigger>
-                    <TabsTrigger value="technology">Technology</TabsTrigger>
-                    <TabsTrigger value="market">Market</TabsTrigger>
-                    <TabsTrigger value="business">Business</TabsTrigger>
-                </TabsList>
-
-                {/* Overview Tab */}
-                <TabsContent value="overview" className="mt-6">
-                    <div className="grid gap-6 md:grid-cols-2">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Market Analysis</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div>
-                                        <h3 className="text-sm font-medium text-gray-500">Market Fit</h3>
-                                        <p className="mt-1">{data.overview.marketAnalysis.marketFit}</p>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-sm font-medium text-gray-500">Potential Score</h3>
-                                        <Progress value={data.overview.marketAnalysis.potentialScore * 10} className="mt-2" />
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Complexity Assessment</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div>
-                                        <h3 className="text-sm font-medium text-gray-500">Implementation</h3>
-                                        <Progress value={data.overview.complexity.implementation * 10} className="mt-2" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-sm font-medium text-gray-500">Technical</h3>
-                                        <Progress value={data.overview.complexity.technical * 10} className="mt-2" />
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>SDE Project Idea Analyzer</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium mb-2">
+                            Project Idea
+                        </label>
+                        <Textarea
+                            placeholder="Describe your project idea..."
+                            value={projectIdea}
+                            onChange={handleIdeaChange}
+                            className="min-h-32"
+                        />
                     </div>
-                </TabsContent>
 
-                {/* Features Tab */}
-                <TabsContent value="features" className="mt-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Core Features</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid gap-4">
-                                {data.features.core.map((feature) => (
-                                    <Card key={feature.id} className="p-4">
-                                        <div className="flex items-start justify-between mb-2">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium mb-2">
+                                Detail Level
+                            </label>
+                            <Select value={detailedIdea} onValueChange={setDetailedIdea}>
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="basic">Basic Analysis</SelectItem>
+                                    <SelectItem value="detailed">Detailed Analysis</SelectItem>
+                                    <SelectItem value="comprehensive">Comprehensive Analysis</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">
+                                Learning Purpose
+                            </label>
+                            <Select value={learningPurpose} onValueChange={setLearningPurpose}>
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="personal">Personal Project</SelectItem>
+                                    <SelectItem value="portfolio">Portfolio Project</SelectItem>
+                                    <SelectItem value="startup">Startup Idea</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    <Button
+                        onClick={()=>analyzeIdea(projectIdea)}
+                        disabled={!projectIdea || loading}
+                        className="w-full"
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Analyzing...
+                            </>
+                        ) : (
+                            'Analyze Idea'
+                        )}
+                    </Button>
+
+                </CardContent>
+            </Card>
+
+            {data && (
+                <>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-bold">{data.metadata.id}</h1>
+                            <p className="text-gray-500">Last updated: {new Date(data.metadata.timestamp).toLocaleString()}</p>
+                        </div>
+                        <Badge variant="secondary">v{data.metadata.version}</Badge>
+                    </div>
+
+                    <Tabs defaultValue="overview" className="w-full">
+                        <TabsList className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                            <TabsTrigger value="overview">Overview</TabsTrigger>
+                            <TabsTrigger value="features">Features</TabsTrigger>
+                            <TabsTrigger value="technology">Technology</TabsTrigger>
+                            <TabsTrigger value="market">Market</TabsTrigger>
+                            <TabsTrigger value="business">Business</TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="overview" className="mt-6">
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Market Analysis</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
                                             <div>
-                                                <h3 className="font-medium flex items-center gap-2">
-                                                    {feature.name}
-                                                    <PriorityBadge priority={feature.priority} />
-                                                </h3>
-                                                <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                                                <h3 className="text-sm font-medium text-gray-500">Market Fit</h3>
+                                                <p className="mt-1">{data.overview.marketAnalysis.marketFit}</p>
                                             </div>
-                                            <StatusBadge status={feature.status} />
-                                        </div>
-                                        <div className="mt-4 flex items-center gap-4">
-                                            <div className="flex-1">
-                                                <span className="text-sm text-gray-500">Complexity</span>
-                                                <Progress value={feature.complexity * 10} className="mt-1" />
-                                            </div>
-                                            <div className="flex items-center gap-1">
-                                                <Clock className="w-4 h-4 text-gray-500" />
-                                                <span className="text-sm text-gray-600">{feature.estimatedDevelopmentTime}</span>
+                                            <div>
+                                                <h3 className="text-sm font-medium text-gray-500">Potential Score</h3>
+                                                <Progress value={data.overview.marketAnalysis.potentialScore * 10} className="mt-2" />
                                             </div>
                                         </div>
-                                    </Card>
-                                ))}
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Complexity Assessment</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <h3 className="text-sm font-medium text-gray-500">Implementation</h3>
+                                                <Progress value={data.overview.complexity.implementation * 10} className="mt-2" />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-sm font-medium text-gray-500">Technical</h3>
+                                                <Progress value={data.overview.complexity.technical * 10} className="mt-2" />
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
+                        </TabsContent>
 
-                {/* Technology Tab */}
-                <TabsContent value="technology" className="mt-6">
-                    <div className="grid gap-6 md:grid-cols-2">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Infrastructure</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    {Object.entries(data.technology.infrastructure).map(([key, values]) => (
-                                        <div key={key}>
-                                            <h3 className="text-sm font-medium text-gray-500 capitalize">{key}</h3>
-                                            <div className="flex flex-wrap gap-2 mt-2">
-                                                {values.map((value, index) => (
-                                                    <Badge key={index} variant="secondary">{value}</Badge>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Stack</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    {Object.entries(data.technology.stack).map(([key, values]) => (
-                                        <div key={key}>
-                                            <h3 className="text-sm font-medium text-gray-500 capitalize">{key}</h3>
-                                            <div className="flex flex-wrap gap-2 mt-2">
-                                                {values.map((value, index) => (
-                                                    <Badge key={index} variant="secondary">{value}</Badge>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </TabsContent>
-
-                {/* Market Analysis Tab */}
-                <TabsContent value="market" className="mt-6">
-                    <div className="space-y-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Competitors</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="grid gap-4 md:grid-cols-2">
-                                    {data.marketAnalysis.competitors.map((competitor) => (
-                                        <Card key={competitor.id} className="p-4">
-                                            <div className="flex justify-between items-start">
-                                                <h3 className="font-medium">{competitor.name}</h3>
-                                                <Badge variant="outline">{competitor.metrics.userBase}</Badge>
-                                            </div>
-                                            <p className="text-sm text-gray-600 mt-2">{competitor.description}</p>
-                                            <div className="mt-4">
-                                                <h4 className="text-sm font-medium mb-2">Key Features</h4>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {competitor.features.map((feature, index) => (
-                                                        <Badge key={index} variant="secondary">{feature}</Badge>
-                                                    ))}
+                        <TabsContent value="features" className="mt-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Core Features</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="grid gap-4">
+                                        {data.features.core.map((feature) => (
+                                            <Card key={feature.id} className="p-4">
+                                                <div className="flex items-start justify-between mb-2">
+                                                    <div>
+                                                        <h3 className="font-medium flex items-center gap-2">
+                                                            {feature.name}
+                                                            <PriorityBadge priority={feature.priority} />
+                                                        </h3>
+                                                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                                                    </div>
+                                                    <StatusBadge status={feature.status} />
                                                 </div>
-                                            </div>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                                                <div className="mt-4 flex items-center gap-4">
+                                                    <div className="flex-1">
+                                                        <span className="text-sm text-gray-500">Complexity</span>
+                                                        <Progress value={feature.complexity * 10} className="mt-1" />
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Clock className="w-4 h-4 text-gray-500" />
+                                                        <span className="text-sm text-gray-600">{feature.estimatedDevelopmentTime}</span>
+                                                    </div>
+                                                </div>
+                                            </Card>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
 
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Market Opportunities</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="grid gap-4 md:grid-cols-2">
-                                    {Object.entries(data.marketAnalysis.opportunities).map(([key, items]) => (
-                                        <Card key={key} className="p-4">
-                                            <h3 className="font-medium mb-3 capitalize">{key}</h3>
-                                            <ul className="space-y-2">
-                                                {items.map((item, index) => (
-                                                    <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                                                        <Gem className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                                                        {item}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </TabsContent>
-
-                {/* Business Model Tab */}
-                <TabsContent value="business" className="mt-6">
-                    <div className="grid gap-6 md:grid-cols-2">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Revenue Model</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-6">
-                                    {data.businessModel.revenue.streams.map((stream, index) => (
-                                        <div key={index} className="space-y-2">
-                                            <h3 className="font-medium">{stream.type}</h3>
-                                            <p className="text-sm text-gray-600">{stream.description}</p>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-sm text-gray-500">Potential:</span>
-                                                <Progress value={stream.potential * 10} className="flex-1" />
-                                            </div>
+                        <TabsContent value="technology" className="mt-6">
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Infrastructure</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            {Object.entries(data.technology.infrastructure).map(([key, values]) => (
+                                                <div key={key}>
+                                                    <h3 className="text-sm font-medium text-gray-500 capitalize">{key}</h3>
+                                                    <div className="flex flex-wrap gap-2 mt-2">
+                                                        {values.map((value, index) => (
+                                                            <Badge key={index} variant="secondary">{value}</Badge>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                                    </CardContent>
+                                </Card>
 
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Key Metrics</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    {Object.entries(data.businessModel.metrics).map(([key, value]) => (
-                                        <div key={key}>
-                                            <h3 className="text-sm font-medium text-gray-500 capitalize">
-                                                {key.replace(/([A-Z])/g, ' $1').trim()}
-                                            </h3>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <Progress value={value * 100} className="flex-1" />
-                                                <span className="text-sm font-medium">${value}</span>
-                                            </div>
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Stack</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            {Object.entries(data.technology.stack).map(([key, values]) => (
+                                                <div key={key}>
+                                                    <h3 className="text-sm font-medium text-gray-500 capitalize">{key}</h3>
+                                                    <div className="flex flex-wrap gap-2 mt-2">
+                                                        {values.map((value, index) => (
+                                                            <Badge key={index} variant="secondary">{value}</Badge>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </TabsContent>
-            </Tabs>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="market" className="mt-6">
+                            <div className="space-y-6">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Competitors</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid gap-4 md:grid-cols-2">
+                                            {data.marketAnalysis.competitors.map((competitor) => (
+                                                <Card key={competitor.id} className="p-4">
+                                                    <div className="flex justify-between items-start">
+                                                        <h3 className="font-medium">{competitor.name}</h3>
+                                                        <Badge variant="outline">{competitor.metrics.userBase}</Badge>
+                                                    </div>
+                                                    <p className="text-sm text-gray-600 mt-2">{competitor.description}</p>
+                                                    <div className="mt-4">
+                                                        <h4 className="text-sm font-medium mb-2">Key Features</h4>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {competitor.features.map((feature, index) => (
+                                                                <Badge key={index} variant="secondary">{feature}</Badge>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </Card>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Market Opportunities</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid gap-4 md:grid-cols-2">
+                                            {Object.entries(data.marketAnalysis.opportunities).map(([key, items]) => (
+                                                <Card key={key} className="p-4">
+                                                    <h3 className="font-medium mb-3 capitalize">{key}</h3>
+                                                    <ul className="space-y-2">
+                                                        {items.map((item, index) => (
+                                                            <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
+                                                                <Gem className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                                                {item}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </Card>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="business" className="mt-6">
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Revenue Model</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-6">
+                                            {data.businessModel.revenue.streams.map((stream, index) => (
+                                                <div key={index} className="space-y-2">
+                                                    <h3 className="font-medium">{stream.type}</h3>
+                                                    <p className="text-sm text-gray-600">{stream.description}</p>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-gray-500">Potential:</span>
+                                                        <Progress value={stream.potential * 10} className="flex-1" />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Key Metrics</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            {Object.entries(data.businessModel.metrics).map(([key, value]) => (
+                                                <div key={key}>
+                                                    <h3 className="text-sm font-medium text-gray-500 capitalize">
+                                                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <Progress value={value * 100} className="flex-1" />
+                                                        <span className="text-sm font-medium">${value}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </TabsContent>
+                    </Tabs>
+                </>
+            )}
         </div>
     );
 };

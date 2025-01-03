@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Button } from '../components/ui/button';
+import TodoCalendar from '../components/calendar';
 
 interface ProductAnalysis {
     metadata: {
@@ -203,7 +204,7 @@ const ProductAnalysisDashboard = () => {
     const handleIdeaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const idea = e.target.value;
         setProjectIdea(idea);
-        
+
     };
 
     if (loading) {
@@ -276,7 +277,7 @@ const ProductAnalysisDashboard = () => {
                         </div>
                     </div>
                     <Button
-                        onClick={()=>analyzeIdea(projectIdea)}
+                        onClick={() => analyzeIdea(projectIdea)}
                         disabled={!projectIdea || loading}
                         className="w-full"
                     >
@@ -533,6 +534,8 @@ const ProductAnalysisDashboard = () => {
                     </Tabs>
                 </>
             )}
+
+            <TodoCalendar />
         </div>
     );
 };

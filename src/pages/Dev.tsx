@@ -170,14 +170,153 @@ const StatusBadge = ({ status }) => {
         </span>
     );
 };
+function convertTasksToCalendarFormat(taskCategories) {
+    const calendarFormat = {};
+    const today = new Date();
+
+    taskCategories.forEach((category, index) => {
+        const startDate = new Date(today);
+        startDate.setDate(today.getDate() + index); // Spread tasks across days starting from today
+
+        const dateKey = startDate.toISOString().split('T')[0];
+        calendarFormat[dateKey] = category.tasks.map((task, taskIndex) => ({
+            id: `${dateKey}-task-${taskIndex + 1}`,
+            text: task,
+            category: category.category,
+            completed: false
+        }));
+    });
+
+    return calendarFormat;
+}
 
 const ProductAnalysisDashboard = () => {
     const [data, setData] = useState(null as ProductAnalysis | null);
+    const [tasks, setTasks] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [projectIdea, setProjectIdea] = useState('');
     const [detailedIdea, setDetailedIdea] = useState('basic');
     const [learningPurpose, setLearningPurpose] = useState('personal');
+    const result = [
+        {
+            category: 'Project Setup',
+            tasks: [
+                'Define project scope and objectives for the Solana Wallet Analyzer',
+                'Set up project repository (e.g., GitHub, GitLab)',
+                'Initialize project with chosen tech stack (React/Node.js/PostgreSQL)',
+                'Configure development environment using Docker and Kubernetes',
+                'Establish coding conventions and guidelines',
+                'Set up CI/CD pipeline for automated deployments'
+            ]
+        },
+        {
+            category: 'Infrastructure Setup',
+            tasks: [
+                'Set up AWS or GCP cloud infrastructure',
+                'Configure Kubernetes cluster for self-hosted deployment',
+                'Configure database server (PostgreSQL)',
+                'Setup storage for blockchain data'
+            ]
+        },
+        {
+            category: 'Database Setup',
+            tasks: [
+                'Design database schema to store transaction, token, and NFT data',
+                'Implement database migrations for initial setup',
+                'Configure database connection pools',
+                'Implement indexing for efficient data retrieval',
+                'Setup data backup and restore mechanisms'
+            ]
+        },
+        {
+            category: 'Solana API Integration',
+            tasks: [
+                'Set up connection with Solana RPC API',
+                'Develop data fetch mechanism to retrieve wallet data',
+                'Implement data caching to reduce API calls',
+                'Develop API for transaction history',
+                'Develop API for token holdings',
+                'Implement mechanism to handle API rate limiting'
+            ]
+        },
+        {
+            category: 'Core Feature Implementation',
+            tasks: [
+                'Implement Transaction History Analysis (feature-1)',
+                'Develop UI components for transaction visualizations',
+                'Implement Token Holdings & Valuation (feature-2)',
+                'Develop UI components to show token values',
+                'Implement Smart Contract Interaction Analysis (feature-3)',
+                'Implement NFT Analysis (feature-5)'
+            ]
+        },
+        {
+            category: 'AI Model Implementation',
+            tasks: [
+                'Choose AI framework (Tensorflow or PyTorch)',
+                'Train AI model for Anomaly Detection (feature-4)',
+                'Develop API endpoints for AI model integration',
+                'Implement data preprocessing for AI model inputs',
+                'Implement UI components to display AI-driven results'
+            ]
+        },
+        {
+            category: 'Backend Development',
+            tasks: [
+                'Develop API endpoints for transaction data',
+                'Develop API endpoints for token data',
+                'Develop API endpoints for NFT data',
+                'Implement security measures for APIs',
+                'Implement data aggregation and processing for UI consumption',
+                'Implement API documentation using Swagger'
+            ]
+        },
+        {
+            category: 'Frontend Development',
+            tasks: [
+                'Set up frontend project with React',
+                'Develop UI components for data visualization',
+                'Develop UI for settings and preferences',
+                'Implement UI for user authentication (if needed)',
+                'Implement navigation and routing logic',
+                'Implement responsive design for different screens',
+                'Implement UI for displaying NFT analysis'
+            ]
+        },
+        {
+            category: 'Testing',
+            tasks: [
+                'Perform unit testing of backend modules',
+                'Perform integration testing of different components',
+                'Perform end-to-end testing for API calls',
+                'Perform UI testing to ensure proper functioning',
+                'Test AI model accuracy',
+                'Conduct user acceptance testing (UAT)'
+            ]
+        },
+        {
+            category: 'Deployment',
+            tasks: [
+                'Configure hosting environment in AWS or GCP',
+                'Build production-ready application artifacts',
+                'Deploy application to a staging environment',
+                'Perform final testing and validation',
+                'Deploy the application to a production environment',
+                'Configure monitoring and logging of the application'
+            ]
+        },
+        {
+            category: 'Post-Launch',
+            tasks: [
+                'Monitor application performance and stability',
+                'Gather user feedback and address issues',
+                'Implement scheduled backups of blockchain data',
+                'Scale resources based on usage and requirements',
+                'Keep software updated with latest version'
+            ]
+        }
+    ]
     async function generateSchedule() {
         console.log('generate schedule')
         console.log(data)
@@ -188,17 +327,23 @@ const ProductAnalysisDashboard = () => {
         setLoading(true);
         setError(null);
         try {
-            const response =await axios.post('http://localhost:8787/gemini/schedule', {
-                projectIdea,
-                features: data?.features,
-                technology: data?.technology,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            // const response =await axios.post('http://localhost:8787/gemini/schedule', {
+            //     projectIdea,
+            //     features: data?.features,
+            //     technology: data?.technology,
+            // }, {
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
 
-            });
-            console.log(response, 'response')
+            // });
+            // console.log(response, 'response')
+            // const result = await response.data;
+            
+            const formattedData = convertTasksToCalendarFormat(result);
+            console.log(formattedData, 'formattedData')
+            setTasks(formattedData);
+            
         } catch (err: any) {
             setError(err.message);
         }
@@ -236,6 +381,12 @@ const ProductAnalysisDashboard = () => {
         const idea = e.target.value;
         setProjectIdea(idea);
 
+    };
+    const cal  = {
+        "2025-01-01": [
+            { id: "task-1", text: "Write documentation", category: "core", completed: false },
+            { id: "task-2", text: "Fix login bug", category: "auth", completed: true }
+        ]
     };
 
     // if (loading) {
@@ -565,11 +716,11 @@ const ProductAnalysisDashboard = () => {
                     </Tabs>
                 </>
             )}
-            {data && <Button onClick={generateSchedule} >
+ <Button onClick={generateSchedule} >
                 create schedule
-            </Button>}
+            </Button>
 
-            <TodoCalendar />
+           {tasks && Object.keys(tasks).length > 0 && <TodoCalendar tasks={convertTasksToCalendarFormat(result)} />}
             <InteractiveFlowchart/>
         </div>
     );

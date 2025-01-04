@@ -10,6 +10,8 @@ import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Button } from '../components/ui/button';
 import TodoCalendar from '../components/calendar';
+import FlowchartDiagram from '../components/flowchart';
+import InteractiveFlowchart from '../components/flowchart';
 
 interface ProductAnalysis {
     metadata: {
@@ -536,6 +538,7 @@ const ProductAnalysisDashboard = () => {
             )}
 
             <TodoCalendar />
+            <InteractiveFlowchart/>
         </div>
     );
 };

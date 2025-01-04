@@ -12,6 +12,8 @@ import { Button } from '../components/ui/button';
 import TodoCalendar from '../components/calendar';
 import FlowchartDiagram from '../components/flowchart';
 import InteractiveFlowchart from '../components/flowchart';
+import { set } from 'date-fns';
+import { features } from 'process';
 
 interface ProductAnalysis {
     metadata: {
@@ -176,7 +178,34 @@ const ProductAnalysisDashboard = () => {
     const [projectIdea, setProjectIdea] = useState('');
     const [detailedIdea, setDetailedIdea] = useState('basic');
     const [learningPurpose, setLearningPurpose] = useState('personal');
+    async function generateSchedule() {
+        console.log('generate schedule')
+        console.log(data)
+        console.log(projectIdea)
+        console.log(data?.metadata)
+        console.log(data?.features)
+        console.log(data?.technology)
+        setLoading(true);
+        setError(null);
+        try {
+            const response =await axios.post('http://localhost:8787/gemini/schedule', {
+                projectIdea,
+                features: data?.features,
+                technology: data?.technology,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
 
+            });
+            console.log(response, 'response')
+        } catch (err: any) {
+            setError(err.message);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
     const analyzeIdea = async (idea: string) => {
         setLoading(true);
         setError(null);
@@ -209,13 +238,13 @@ const ProductAnalysisDashboard = () => {
 
     };
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center h-64">
-                <Loader2 className="w-8 h-8 animate-spin" />
-            </div>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="flex items-center justify-center h-64">
+    //             <Loader2 className="w-8 h-8 animate-spin" />
+    //         </div>
+    //     );
+    // }
 
     if (error) {
         return (
@@ -536,6 +565,9 @@ const ProductAnalysisDashboard = () => {
                     </Tabs>
                 </>
             )}
+            {data && <Button onClick={generateSchedule} >
+                create schedule
+            </Button>}
 
             <TodoCalendar />
             <InteractiveFlowchart/>

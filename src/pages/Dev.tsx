@@ -725,7 +725,7 @@ const ProductAnalysisDashboard = () => {
            {tasks && Object.keys(tasks).length > 0 && <TodoCalendar tasks={convertTasksToCalendarFormat(result)} />}
             <InteractiveFlowchart />
             <DragDropCalendar />
-            {/* <DndCalendar/> */}
+            <DndCalendar/>
         </div>
     );
 };

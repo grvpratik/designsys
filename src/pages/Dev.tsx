@@ -14,6 +14,8 @@ import FlowchartDiagram from '../components/flowchart';
 import InteractiveFlowchart from '../components/flowchart';
 import { set } from 'date-fns';
 import { features } from 'process';
+import DragDropCalendar from '../components/drag-drop';
+import { DndCalendar } from '../components/ext-drag';
 
 interface ProductAnalysis {
     metadata: {
@@ -721,7 +723,9 @@ const ProductAnalysisDashboard = () => {
             </Button>
 
            {tasks && Object.keys(tasks).length > 0 && <TodoCalendar tasks={convertTasksToCalendarFormat(result)} />}
-            <InteractiveFlowchart/>
+            <InteractiveFlowchart />
+            <DragDropCalendar />
+            {/* <DndCalendar/> */}
         </div>
     );
 };

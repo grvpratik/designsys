@@ -15,7 +15,8 @@ import InteractiveFlowchart from '../components/flowchart';
 import { set } from 'date-fns';
 import { features } from 'process';
 import DragDropCalendar from '../components/drag-drop';
-import { DndCalendar } from '../components/ext-drag';
+
+import CalendarTaskViewer from '../components/task-viewer';
 
 interface ProductAnalysis {
     metadata: {
@@ -341,11 +342,11 @@ const ProductAnalysisDashboard = () => {
             // });
             // console.log(response, 'response')
             // const result = await response.data;
-            
+
             const formattedData = convertTasksToCalendarFormat(result);
             console.log(formattedData, 'formattedData')
             setTasks(formattedData);
-            
+
         } catch (err: any) {
             setError(err.message);
         }
@@ -384,7 +385,7 @@ const ProductAnalysisDashboard = () => {
         setProjectIdea(idea);
 
     };
-    const cal  = {
+    const cal = {
         "2025-01-01": [
             { id: "task-1", text: "Write documentation", category: "core", completed: false },
             { id: "task-2", text: "Fix login bug", category: "auth", completed: true }
@@ -718,14 +719,15 @@ const ProductAnalysisDashboard = () => {
                     </Tabs>
                 </>
             )}
- <Button onClick={generateSchedule} >
+            <Button onClick={generateSchedule} >
                 create schedule
             </Button>
 
-           {tasks && Object.keys(tasks).length > 0 && <TodoCalendar tasks={convertTasksToCalendarFormat(result)} />}
+            {tasks && Object.keys(tasks).length > 0 && <TodoCalendar tasks={convertTasksToCalendarFormat(result)} />}
             <InteractiveFlowchart />
             <DragDropCalendar />
-            <DndCalendar/>
+         
+            <CalendarTaskViewer/>
         </div>
     );
 };

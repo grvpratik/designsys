@@ -32,6 +32,11 @@
   resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-7.1.1.tgz#15e19737d946559289b915e5dad3b4c28407735e"
   integrity sha512-i1L7noDNxtFyL5DmZafWy1wRVhGehQmzZaz1HiN5e7iylJMSZR7ekOV7NsIqa5qBldlLrsKv4HbgFUVlQrz8Mw==
 
+"@chainlift/liftkit-css@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@chainlift/liftkit-css/-/liftkit-css-1.1.1.tgz#b544b46af385a4c2e1bcf489d48b372a40b7bb73"
+  integrity sha512-ZT8JBP/7iC0KUGhuhu0STGc5RXRTnopLis8tMvbHYL0zQJRgmRjQRD4u5iuBF8nnNs03Pn3587hV5Ag5jPzPLg==
+
 "@chevrotain/cst-dts-gen@11.0.3":
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/@chevrotain/cst-dts-gen/-/cst-dts-gen-11.0.3.tgz#5e0863cc57dc45e204ccfee6303225d15d9d4783"

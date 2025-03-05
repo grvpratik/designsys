@@ -7,7 +7,7 @@ import {
     WalletModalProvider
 } from '@solana/wallet-adapter-react-ui';
 
-import Conn from '../section/conn';
+import Conn from '../layout/conn';
 
 // Default styles that can be overridden by your app
 import('@solana/wallet-adapter-react-ui/styles.css');

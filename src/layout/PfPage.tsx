@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 // Mock data for the PF list
 const pfItems = [
@@ -58,9 +59,10 @@ export default function PFPage() {
 
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{pfItems.map((item) => (
-					<a
+					<Link
+					
 						key={item.id}
-						href={`/pf/${item.id}`}
+						to={`/pf/${item.id}`}
 						className="card hover:bg-card/80 transition-all duration-200 hover:scale-[1.02]"
 					>
 						<div className="flex items-center gap-4">
@@ -87,7 +89,7 @@ export default function PFPage() {
 								{item.change}
 							</div>
 						</div>
-					</a>
+					</Link>
 				))}
 			</div>
 		</div>

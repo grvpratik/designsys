@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { ArrowLeft, ExternalLink, Share2 } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 // Mock data for the detail view
@@ -129,9 +129,9 @@ export default function PFDetailPage() {
 	return (
 		<div className="p-6 md:p-8 max-w-4xl mx-auto">
 			<div className="flex items-center justify-between mb-6">
-				<a href="/pf" className="btn btn-secondary p-2">
+				<Link  to="/pf" className="btn btn-secondary p-2">
 					<ArrowLeft size={20} />
-				</a>
+				</Link>
 
 				<div className="flex gap-2">
 					<button className="btn btn-secondary p-2">

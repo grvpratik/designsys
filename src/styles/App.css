@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* colors -primary,secondary,accent====neutral (card,popover) ===other(success,danger,warning,info)*/
+/* typography with fluid text */
+/* spacing,margin,gap,padding */
+/*  */
+
 :root {
       --background: 0 0% 100%;
       --foreground: 224 71.4% 4.1%;

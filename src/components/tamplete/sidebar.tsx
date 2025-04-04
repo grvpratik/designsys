@@ -1,83 +1,176 @@
-"use client";
+import React from "react";
+import {
+	ChevronRight,
+	Download,
+	Settings,
+	Heart,
+	MessageSquareDashed,
+	Info,
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { DiscoverSVG, HomeSVG, SettingsSVG, UserCircleSVG, UserSVG, WalletSVG } from "../svg";
 
-import { Home, Briefcase, TrendingUp, Users } from "lucide-react";
-import { useLocation } from "react-router-dom";
-export default function Sidebar() {
-	const pathname = useLocation().pathname;
+// Interface for sidebar item props
+interface SidebarItemProps {
+	icon: React.ReactNode;
+	label: string;
+	path: string;
+	notification?: boolean;
+	isActive: boolean;
+}
+//sidebar-background,sidebar-text,sidebar-item:hover,item:active:background,text ,opacity
 
-	const isActive = (path: string) => {
-		return pathname === path || (path !== "/" && pathname.startsWith(path));
-	};
+const SidebarItem: React.FC<SidebarItemProps> = ({
+	icon,
+	label,
+	path,
+	notification = false,
+	isActive,
+}) => {
+	const itemBaseClasses =
+		"flex flex-col items-center justify-center w-full py-2 px-4 select-none  ";
+	const itemTransitionClasses =
+		"transition-all duration-100 ease-in text-opacity-50 hover:text-opacity-100 text-white";
+	const activeItemClasses = "bg-white bg-opacity-100 rounded-md";
+	const inactiveItemClasses = "bg-white bg-opacity-0  rounded-md";
+	const activeTextClasses = "text-black ";
+	const inactiveTextClasses = " ";
+	const labelBaseClasses = "text-xs mt-1";
+	const activeLabelClasses = "text-black";
+	const inactiveLabelClasses = "text-gray-400";
 
 	return (
-		<aside className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-64 bg-gray-800/60 border-r border-border">
-			<div className="p-6">
-				<h1 className="text-xl font-bold">Crypto App</h1>
+		<Link to={path} className="w-full text-decoration-none ">
+			<div
+				className={` 
+          ${itemBaseClasses}
+          ${itemTransitionClasses}
+          ${isActive ? activeItemClasses : inactiveItemClasses}
+        `}
+			>
+				<div
+					className={`relative  ${
+						isActive ? activeTextClasses : inactiveTextClasses
+					}`}
+				>
+					{icon}
+					{notification && (
+						<span
+							className={`absolute -top-1 -right-2 text-xs font-bold ${
+								isActive ? activeTextClasses : inactiveTextClasses
+							}`}
+						>
+							<div className=" size-2 rounded-full bg-green-500"></div>
+						</span>
+					)}
+				</div>
+				<span
+					className={`
+            ${labelBaseClasses}
+            ${isActive ? activeLabelClasses : inactiveLabelClasses}
+          `}
+				>
+					{label}
+				</span>
 			</div>
-
-			<nav className="flex-1 px-4 py-6">
-				<ul className="space-y-2">
-					<li>
-						<a
-							href="/"
-							className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-								isActive("/")
-									? "bg-primary/10 text-primary"
-									: "text-white/70 hover:bg-card/80"
-							}`}
-						>
-							<Home size={20} />
-							<span>Home</span>
-						</a>
-					</li>
-
-					<li>
-						<a
-							href="/pf"
-							className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-								isActive("/pf")
-									? "bg-primary/10 text-primary"
-									: "text-white/70 hover:bg-card/80"
-							}`}
-						>
-							<Briefcase size={20} />
-							<span>Portfolio</span>
-						</a>
-					</li>
-
-					<li>
-						<a
-							href="/rf"
-							className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-								isActive("/rf")
-									? "bg-primary/10 text-primary"
-									: "text-white/70 hover:bg-card/80"
-							}`}
-						>
-							<TrendingUp size={20} />
-							<span>Reports</span>
-						</a>
-					</li>
-
-					<li>
-						<a
-							href="/social"
-							className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-								isActive("/social")
-									? "bg-primary/10 text-primary"
-									: "text-white/70 hover:bg-card/80"
-							}`}
-						>
-							<Users size={20} />
-							<span>Social</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-
-			<div className="p-6 border-t border-border">
-				<div className="text-sm text-white/50">v1.0.0</div>
-			</div>
-		</aside>
+		</Link>
 	);
+};
+
+// Sidebar section component for grouping similar items
+interface SidebarSectionProps {
+	items: {
+		icon: React.ReactNode;
+		label: string;
+		path: string;
+		notification?: boolean;
+	}[];
+	pathname: string;
 }
+
+const SidebarSection: React.FC<SidebarSectionProps> = ({ items, pathname }) => {
+	return (
+		<div className="flex flex-col items-center w-full px-2 space-y-1">
+			{items.map((item) => (
+				<div key={item.path} className="w-full">
+					<SidebarItem
+						icon={item.icon}
+						label={item.label}
+						path={item.path}
+						notification={item.notification}
+						isActive={pathname === item.path}
+					/>
+				</div>
+			))}
+		</div>
+	);
+};
+
+const Sidebar: React.FC = () => {
+	const location = useLocation();
+	const pathname = location.pathname;
+
+	// Define sidebar items grouped by section
+	const mainItems = [
+		{
+			icon: <HomeSVG size={20} />,
+			label: "save",
+			path: "/save",
+		},
+		{
+			icon:<DiscoverSVG size={20}/>,
+			label: "discover",
+			path: "/discover",
+			notification: true,
+		},
+	];
+
+	const utilityItems = [
+		{
+			icon: <SettingsSVG size={20} />,
+			label: "settings",
+			path: "/settings",
+		},
+		{
+			icon: <Heart size={20} />,
+			label: "donate",
+			path: "/donate",
+		},
+		{
+			icon: <WalletSVG size={20}  />,
+			label: "wallet",
+			path: "/wallet",
+		},
+		{
+			icon: <UserCircleSVG size={20} />,
+			label: "about",
+			path: "/about",
+		},
+	];
+
+	// Named Tailwind classes for sidebar layout
+	const sidebarClasses =
+		"flex-col items-center bg-black text-white h-full w-24 py-4 flex  opacity-0 md:opacity-100 transition-opacity ";
+	const logoClasses =
+		"mb-6 cursor-pointer bg-blue-500 p-2 rounded-full hover:bg-blue-600 transition-colors duration-300";
+
+	return (
+		<div className={sidebarClasses}>
+			{/* Logo/brand section */}
+			<div className={logoClasses}>
+				<ChevronRight size={24} />
+			</div>
+
+			{/* Main actions section */}
+			<SidebarSection items={mainItems} pathname={pathname} />
+
+			{/* Spacer */}
+			<div className="flex-grow"></div>
+
+			{/* Utility section */}
+			<SidebarSection items={utilityItems} pathname={pathname} />
+		</div>
+	);
+};
+
+export default Sidebar;

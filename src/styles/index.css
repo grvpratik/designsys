@@ -3,3 +3,343 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Typography Foundation Variables */
+  
+  /* Title / H1 */
+  --font-title-h1-weight: 500;
+  --font-title-h1-size: 56px;
+  --font-title-h1-line-height: 64px;
+  --font-title-h1-letter-spacing: -0.01em;
+  
+  /* Title / H2 */
+  --font-title-h2-weight: 500;
+  --font-title-h2-size: 48px;
+  --font-title-h2-line-height: 56px;
+  --font-title-h2-letter-spacing: -0.01em;
+  
+  /* Title / H3 */
+  --font-title-h3-weight: 500;
+  --font-title-h3-size: 40px;
+  --font-title-h3-line-height: 48px;
+  --font-title-h3-letter-spacing: -0.01em;
+  
+  /* Title / H4 */
+  --font-title-h4-weight: 500;
+  --font-title-h4-size: 32px;
+  --font-title-h4-line-height: 40px;
+  --font-title-h4-letter-spacing: -0.005em;
+  
+  /* Title / H5 */
+  --font-title-h5-weight: 500;
+  --font-title-h5-size: 24px;
+  --font-title-h5-line-height: 32px;
+  --font-title-h5-letter-spacing: 0;
+  
+  /* Title / H6 */
+  --font-title-h6-weight: 500;
+  --font-title-h6-size: 20px;
+  --font-title-h6-line-height: 28px;
+  --font-title-h6-letter-spacing: 0;
+  
+  /* Label / X-Large */
+  --font-label-xl-weight: 500;
+  --font-label-xl-size: 24px;
+  --font-label-xl-line-height: 32px;
+  --font-label-xl-letter-spacing: -0.015em;
+  
+  /* Label / Large */
+  --font-label-lg-weight: 500;
+  --font-label-lg-size: 18px;
+  --font-label-lg-line-height: 24px;
+  --font-label-lg-letter-spacing: -0.015em;
+  
+  /* Label / Medium */
+  --font-label-md-weight: 500;
+  --font-label-md-size: 16px;
+  --font-label-md-line-height: 24px;
+  --font-label-md-letter-spacing: -0.011em;
+  
+  /* Label / Small */
+  --font-label-sm-weight: 500;
+  --font-label-sm-size: 14px;
+  --font-label-sm-line-height: 20px;
+  --font-label-sm-letter-spacing: -0.006em;
+  
+  /* Label / X-Small */
+  --font-label-xs-weight: 500;
+  --font-label-xs-size: 12px;
+  --font-label-xs-line-height: 16px;
+  --font-label-xs-letter-spacing: 0;
+  
+  /* Paragraph / X-Large */
+  --font-paragraph-xl-weight: 400;
+  --font-paragraph-xl-size: 24px;
+  --font-paragraph-xl-line-height: 32px;
+  --font-paragraph-xl-letter-spacing: -0.015em;
+  
+  /* Paragraph / Large */
+  --font-paragraph-lg-weight: 400;
+  --font-paragraph-lg-size: 18px;
+  --font-paragraph-lg-line-height: 24px;
+  --font-paragraph-lg-letter-spacing: -0.015em;
+  
+  /* Paragraph / Medium */
+  --font-paragraph-md-weight: 400;
+  --font-paragraph-md-size: 16px;
+  --font-paragraph-md-line-height: 24px;
+  --font-paragraph-md-letter-spacing: -0.011em;
+  
+  /* Paragraph / Small */
+  --font-paragraph-sm-weight: 400;
+  --font-paragraph-sm-size: 14px;
+  --font-paragraph-sm-line-height: 20px;
+  --font-paragraph-sm-letter-spacing: -0.006em;
+  
+  /* Paragraph / X-Small */
+  --font-paragraph-xs-weight: 400;
+  --font-paragraph-xs-size: 12px;
+  --font-paragraph-xs-line-height: 16px;
+  --font-paragraph-xs-letter-spacing: 0;
+  
+  /* Subheading / Medium */
+  --font-subheading-md-weight: 500;
+  --font-subheading-md-size: 16px;
+  --font-subheading-md-line-height: 24px;
+  --font-subheading-md-letter-spacing: 0.06em;
+  
+  /* Subheading / Small */
+  --font-subheading-sm-weight: 500;
+  --font-subheading-sm-size: 14px;
+  --font-subheading-sm-line-height: 20px;
+  --font-subheading-sm-letter-spacing: 0.06em;
+  
+  /* Subheading / X-Small */
+  --font-subheading-xs-weight: 500;
+  --font-subheading-xs-size: 12px;
+  --font-subheading-xs-line-height: 16px;
+  --font-subheading-xs-letter-spacing: 0.04em;
+  
+  /* Subheading / 2X-Small */
+  --font-subheading-2xs-weight: 500;
+  --font-subheading-2xs-size: 11px;
+  --font-subheading-2xs-line-height: 12px;
+  --font-subheading-2xs-letter-spacing: 0.02em;
+  
+  /* Doc / Label */
+  --font-doc-label-weight: 500;
+  --font-doc-label-size: 18px;
+  --font-doc-label-line-height: 32px;
+  --font-doc-label-letter-spacing: -0.015em;
+  
+  /* Doc / Paragraph */
+  --font-doc-paragraph-weight: 400;
+  --font-doc-paragraph-size: 18px;
+  --font-doc-paragraph-line-height: 32px;
+  --font-doc-paragraph-letter-spacing: -0.015em;
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/* For IE and Edge */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+}
+/* Thin, rounded, gray scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5); /* gray-400 with opacity */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7); /* slightly darker on hover */
+}
+/* .custom-scrollbar::-moz-scrollbar-button:decrement,
+::-moz-scrollbar-button:increment,
+::-webkit-scrollbar-button:decrement,
+::-webkit-scrollbar-button:increment {
+  width: 0px;
+} */
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  /* z-index: 999; */
+}
+/* Typography Utility Classes */
+
+/* Title Classes */
+.title-h1 {
+  font-weight: var(--font-title-h1-weight);
+  font-size: var(--font-title-h1-size);
+  line-height: var(--font-title-h1-line-height);
+  letter-spacing: var(--font-title-h1-letter-spacing);
+}
+
+.title-h2 {
+  font-weight: var(--font-title-h2-weight);
+  font-size: var(--font-title-h2-size);
+  line-height: var(--font-title-h2-line-height);
+  letter-spacing: var(--font-title-h2-letter-spacing);
+}
+
+.title-h3 {
+  font-weight: var(--font-title-h3-weight);
+  font-size: var(--font-title-h3-size);
+  line-height: var(--font-title-h3-line-height);
+  letter-spacing: var(--font-title-h3-letter-spacing);
+}
+
+.title-h4 {
+  font-weight: var(--font-title-h4-weight);
+  font-size: var(--font-title-h4-size);
+  line-height: var(--font-title-h4-line-height);
+  letter-spacing: var(--font-title-h4-letter-spacing);
+}
+
+.title-h5 {
+  font-weight: var(--font-title-h5-weight);
+  font-size: var(--font-title-h5-size);
+  line-height: var(--font-title-h5-line-height);
+  letter-spacing: var(--font-title-h5-letter-spacing);
+}
+
+.title-h6 {
+  font-weight: var(--font-title-h6-weight);
+  font-size: var(--font-title-h6-size);
+  line-height: var(--font-title-h6-line-height);
+  letter-spacing: var(--font-title-h6-letter-spacing);
+}
+
+/* Label Classes */
+.label-xl {
+  font-weight: var(--font-label-xl-weight);
+  font-size: var(--font-label-xl-size);
+  line-height: var(--font-label-xl-line-height);
+  letter-spacing: var(--font-label-xl-letter-spacing);
+}
+
+.label-lg {
+  font-weight: var(--font-label-lg-weight);
+  font-size: var(--font-label-lg-size);
+  line-height: var(--font-label-lg-line-height);
+  letter-spacing: var(--font-label-lg-letter-spacing);
+}
+
+.label-md {
+  font-weight: var(--font-label-md-weight);
+  font-size: var(--font-label-md-size);
+  line-height: var(--font-label-md-line-height);
+  letter-spacing: var(--font-label-md-letter-spacing);
+}
+
+.label-sm {
+  font-weight: var(--font-label-sm-weight);
+  font-size: var(--font-label-sm-size);
+  line-height: var(--font-label-sm-line-height);
+  letter-spacing: var(--font-label-sm-letter-spacing);
+}
+
+.label-xs {
+  font-weight: var(--font-label-xs-weight);
+  font-size: var(--font-label-xs-size);
+  line-height: var(--font-label-xs-line-height);
+  letter-spacing: var(--font-label-xs-letter-spacing);
+}
+
+/* Paragraph Classes */
+.paragraph-xl {
+  font-weight: var(--font-paragraph-xl-weight);
+  font-size: var(--font-paragraph-xl-size);
+  line-height: var(--font-paragraph-xl-line-height);
+  letter-spacing: var(--font-paragraph-xl-letter-spacing);
+}
+
+.paragraph-lg {
+  font-weight: var(--font-paragraph-lg-weight);
+  font-size: var(--font-paragraph-lg-size);
+  line-height: var(--font-paragraph-lg-line-height);
+  letter-spacing: var(--font-paragraph-lg-letter-spacing);
+}
+
+.paragraph-md {
+  font-weight: var(--font-paragraph-md-weight);
+  font-size: var(--font-paragraph-md-size);
+  line-height: var(--font-paragraph-md-line-height);
+  letter-spacing: var(--font-paragraph-md-letter-spacing);
+}
+
+.paragraph-sm {
+  font-weight: var(--font-paragraph-sm-weight);
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.paragraph-xs {
+  font-weight: var(--font-paragraph-xs-weight);
+  font-size: var(--font-paragraph-xs-size);
+  line-height: var(--font-paragraph-xs-line-height);
+  letter-spacing: var(--font-paragraph-xs-letter-spacing);
+}
+
+/* Subheading Classes */
+.subheading-md {
+  font-weight: var(--font-subheading-md-weight);
+  font-size: var(--font-subheading-md-size);
+  line-height: var(--font-subheading-md-line-height);
+  letter-spacing: var(--font-subheading-md-letter-spacing);
+}
+
+.subheading-sm {
+  font-weight: var(--font-subheading-sm-weight);
+  font-size: var(--font-subheading-sm-size);
+  line-height: var(--font-subheading-sm-line-height);
+  letter-spacing: var(--font-subheading-sm-letter-spacing);
+}
+
+.subheading-xs {
+  font-weight: var(--font-subheading-xs-weight);
+  font-size: var(--font-subheading-xs-size);
+  line-height: var(--font-subheading-xs-line-height);
+  letter-spacing: var(--font-subheading-xs-letter-spacing);
+}
+
+.subheading-2xs {
+  font-weight: var(--font-subheading-2xs-weight);
+  font-size: var(--font-subheading-2xs-size);
+  line-height: var(--font-subheading-2xs-line-height);
+  letter-spacing: var(--font-subheading-2xs-letter-spacing);
+}
+
+/* Doc Classes */
+.doc-label {
+  font-weight: var(--font-doc-label-weight);
+  font-size: var(--font-doc-label-size);
+  line-height: var(--font-doc-label-line-height);
+  letter-spacing: var(--font-doc-label-letter-spacing);
+}
+
+.doc-paragraph {
+  font-weight: var(--font-doc-paragraph-weight);
+  font-size: var(--font-doc-paragraph-size);
+  line-height: var(--font-doc-paragraph-line-height);
+  letter-spacing: var(--font-doc-paragraph-letter-spacing);
+}

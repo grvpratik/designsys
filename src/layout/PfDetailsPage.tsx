@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 import { ArrowLeft, ExternalLink, Share2 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
-
+import { Link, useLocation, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // Mock data for the detail view
 const mockData = {
@@ -118,7 +118,7 @@ const mockData = {
 export default function PFDetailPage() {
 	const { id } = useParams<{ id: string }>();
 	const [activeTab, setActiveTab] = useState<"onchain" | "social">("onchain");
-
+const location =useLocation()
 	// Get the data for the current ID
 	const itemData = mockData[id as keyof typeof mockData];
 
@@ -127,9 +127,16 @@ export default function PFDetailPage() {
 	}
 
 	return (
+		<motion.div
+					key={location.key}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.5 }}
+				>
 		<div className="p-6 md:p-8 max-w-4xl mx-auto">
 			<div className="flex items-center justify-between mb-6">
-				<Link  to="/pf" className="btn btn-secondary p-2">
+				<Link to="/discover" className="btn btn-secondary p-2">
 					<ArrowLeft size={20} />
 				</Link>
 
@@ -262,6 +269,6 @@ export default function PFDetailPage() {
 					</div>
 				)}
 			</div>
-		</div>
+		</div></motion.div>
 	);
 }

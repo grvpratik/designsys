@@ -60,9 +60,8 @@ export default function PFPage() {
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{pfItems.map((item) => (
 					<Link
-					
 						key={item.id}
-						to={`/pf/${item.id}`}
+						to={`/discover/${item.id}`}
 						className="card hover:bg-card/80 transition-all duration-200 hover:scale-[1.02]"
 					>
 						<div className="flex items-center gap-4">

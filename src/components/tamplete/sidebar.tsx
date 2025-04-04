@@ -35,9 +35,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	const inactiveItemClasses = "bg-white bg-opacity-0  rounded-md";
 	const activeTextClasses = "text-black ";
 	const inactiveTextClasses = " ";
-	const labelBaseClasses = "text-xs mt-1";
+	const labelBaseClasses = "text-xs mt-1 ";
 	const activeLabelClasses = "text-black";
-	const inactiveLabelClasses = "text-gray-400";
+	const inactiveLabelClasses = "";
 
 	return (
 		<Link to={path} className="w-full text-decoration-none ">
@@ -114,8 +114,8 @@ const Sidebar: React.FC = () => {
 	const mainItems = [
 		{
 			icon: <HomeSVG size={20} />,
-			label: "save",
-			path: "/save",
+			label: "home",
+			path: "/",
 		},
 		{
 			icon:<DiscoverSVG size={20}/>,
@@ -150,9 +150,9 @@ const Sidebar: React.FC = () => {
 
 	// Named Tailwind classes for sidebar layout
 	const sidebarClasses =
-		"flex-col items-center bg-black text-white h-full w-24 py-4 flex  opacity-0 md:opacity-100 transition-opacity ";
+		"flex-col items-center  bg-black text-white h-full w-24 py-4 flex  opacity-0 md:opacity-100 transition-opacity ";
 	const logoClasses =
-		"mb-6 cursor-pointer bg-blue-500 p-2 rounded-full hover:bg-blue-600 transition-colors duration-300";
+		"mb-4 cursor-pointer bg-blue-500 p-l  rounded-full hover:bg-blue-600 transition-colors duration-300";
 
 	return (
 		<div className={sidebarClasses}>

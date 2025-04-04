@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 export default function RootLayout() {
 	return (
 		<html lang="en">
-			<body className="bg-black overflow-hidden ">
+			<body className=" overflow-hidden ">
 				<div className="flex h-screen ">
 					{/* Fixed Sidebar for larger screens */}
 					<div className="-translate-x-full h-screen fixed inset-y-0 left-0 w-24 md:translate-x-0 transition-transform duration-100 ease-in-out">

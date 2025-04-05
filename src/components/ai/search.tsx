@@ -1,8 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/utils";
-import { ArrowUp, Globe, Option, OptionIcon, Plus } from "lucide-react";
+import {
+	ArrowUp,
+	Globe,
+	Option,
+	OptionIcon,
+	Plus,
+	Sparkle,
+	Sparkles,
+} from "lucide-react";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { ImageFrameSVG } from "../svg";
+import { GlobeSVG, ImageFrameSVG, NewChatSVG, ReloadSVG } from "../svg";
 
 const SearchUI = ({
 	maxHeight = 140,
@@ -38,10 +46,10 @@ const SearchUI = ({
 	};
 
 	return (
-		<div className="flex w-full max-w-lg mx-auto">
-			<div className="w-full bg-black/90 rounded-3xl p-1 shadow-lg border border-slate-700/50 overflow-hidden backdrop-blur-sm">
+		<div className="flex w-full max-w-3xl mx-auto">
+			<div className="w-full bg-black/90 rounded-3xl p-1  overflow-hidden backdrop-blur-sm  custom-shadowx">
 				{/* Header */}
-				{/* <div className="flex items-center px-4 py-3 rounded-t-[20px] rounded-b-sm gap-3 border-b bg-slate-200 border-slate-700/30">
+				{/* <div className="flex items-center px-4 py-3 rounded-t-[20px] rounded-b-sm gap-3 border-b bg-white/20  backdrop-blur-md border-slate-700/30">
 					<div className="h-8 w-8 rounded-lg bg-blue-500 flex items-center justify-center">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -53,8 +61,10 @@ const SearchUI = ({
 						</svg>
 					</div>
 					<div className="flex-1">
-						<div className="font-medium text-white transition-all text-sm">{title}</div>
-						<div className="text-white transition-all opacity-60 hover:opacity-100 div>
+						<div className="font-medium text-white transition-all text-sm">
+							{title}
+						</div>
+						<div className="text-slate-400 text-xs">{subtitle}</div>
 					</div>
 					<button className="px-3 py-1 rounded-md text-sm text-white transition-all bg-slate-700 hover:bg-slate-600">
 						Stop
@@ -86,19 +96,17 @@ const SearchUI = ({
 							<ImageFrameSVG />
 						</button>
 						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<Globe />
+							<GlobeSVG />
 						</button>
 						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<ReloadIcon />
+							<ReloadSVG />
 						</button>
 						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<Plus className="" />
+							<NewChatSVG className="" />
 						</button>
 					</div>
 					<button className=" size-8 aspect-square flex items-center justify-center rounded-full bg-white">
-						<span className="text-black">
-							<ArrowUp />
-						</span>
+						<Sparkles className="text-black p-0.5" />
 					</button>
 				</div>
 			</div>

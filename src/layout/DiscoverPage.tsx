@@ -44,7 +44,7 @@ const pfItems = [
 	},
 ];
 
-export default function PFPage() {
+export default function Discover() {
 	return (
 		<div className="p-6 md:p-8">
 			<div className="flex justify-between items-center mb-6">

@@ -257,3 +257,90 @@ export const NewChatSVG: React.FC<IconProps> = ({
 		</svg>
 	);
 };
+
+
+export const GlobeSVG: React.FC<IconProps> = ({
+	className,
+	strokeWidth = 1.5,
+	size = 24,
+	...props
+}) => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth={strokeWidth}
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={className}
+			{...props}
+		>
+			<circle cx={12} cy={12} r={10} />
+			<path d="M8 12c0 6 4 10 4 10s4-4 4-10s-4-10-4-10s-4 4-4 10m13 3H3m18-6H3" />
+		</svg>
+	);
+};
+
+export const ArrowUpSVG: React.FC<IconProps> = ({
+	className,
+	strokeWidth = 1.5,
+	size = 24,
+	...props
+}) => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth={strokeWidth}
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={className}
+			{...props}
+		>
+			<path d="M12 4v16m5-11s-3.682-5-5-5s-5 5-5 5" color="currentColor" />
+		</svg>
+	);
+};
+
+export const ReloadSVG: React.FC<IconProps> = ({
+	className,
+	strokeWidth = 1.5,
+	size = 24,
+	...props
+}) => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth={strokeWidth}
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={className}
+			{...props}
+		>
+			<g
+				fill="none"
+				stroke="currentColor"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth={strokeWidth}
+				color="currentColor"
+			>
+				<path d="M20.5 5.5h-11C5.787 5.5 3 8.185 3 12m.5 6.5h11c3.713 0 6.5-2.685 6.5-6.5" />
+				<path d="M18.5 3S21 4.841 21 5.5S18.5 8 18.5 8m-13 8S3 17.841 3 18.5S5.5 21 5.5 21" />
+			</g>
+		</svg>
+	);
+};

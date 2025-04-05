@@ -7,8 +7,11 @@ import RootLayout from "./layout/Homelayout";
 import NotFoundPage from "./layout/NotFoundPage";
 
 import Home from "./layout/HomePage";
-import PFPage from "./layout/PfPage";
+import Discover from "./layout/DiscoverPage";
 import PFDetailPage from "./layout/PfDetailsPage";
+
+import ChatDetailsPage from "./layout/ChatDetails";
+import SettingsPage from "./layout/SettingsPage";
 
 function App() {
 	return (
@@ -21,19 +24,17 @@ function App() {
 }
 
 function RoutesWrapper() {
-	
-
 	return (
-		
-			<Routes location={location}>
-				<Route path="/" element={<RootLayout />}>
-					<Route index element={<Home />} />
-					<Route path="/discover" element={<PFPage />} />
-					<Route path="/discover/:id" element={<PFDetailPage />} />
-					<Route path="*" element={<NotFoundPage />} />
-				</Route>
-			</Routes>
-		
+		<Routes location={location}>
+			<Route path="/" element={<RootLayout />}>
+				<Route index element={<Home />} />
+				<Route path="/chat/:id" element={<ChatDetailsPage />} />
+				<Route path="/discover" element={<Discover />} />
+				<Route path="/discover/:id" element={<PFDetailPage />} />
+				<Route path="/settings" element={<SettingsPage />} />
+				<Route path="*" element={<NotFoundPage />} />
+			</Route>
+		</Routes>
 	);
 }
 

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { DiscoverSVG, HomeSVG, SettingsSVG, UserCircleSVG, UserSVG, WalletSVG } from "../svg";
+import { MagicWandIcon } from "@radix-ui/react-icons";
 
 // Interface for sidebar item props
 interface SidebarItemProps {
@@ -28,7 +29,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	isActive,
 }) => {
 	const itemBaseClasses =
-		"flex flex-col items-center justify-center w-full py-2 px-4 select-none  ";
+		"flex flex-col  items-center justify-center w-full py-2 px-3 select-none  ";
 	const itemTransitionClasses =
 		"transition-all duration-100 ease-in text-opacity-50 hover:text-opacity-100 text-white";
 	const activeItemClasses = "bg-white bg-opacity-100 rounded-md";
@@ -150,15 +151,15 @@ const Sidebar: React.FC = () => {
 
 	// Named Tailwind classes for sidebar layout
 	const sidebarClasses =
-		"flex-col items-center  bg-black text-white h-full w-24 py-4 flex  opacity-0 md:opacity-100 transition-opacity ";
+		"flex-col items-center  bg-black text-white h-full w-full pb-4 flex  opacity-0 md:opacity-100 transition-opacity ";
 	const logoClasses =
-		"mb-4 cursor-pointer bg-blue-500 p-l  rounded-full hover:bg-blue-600 transition-colors duration-300";
+		" cursor-pointer bg-blue-500 p-1 rounded-2xl flex item-center justify-center my-4  hover:bg-blue-600 transition-colors duration-300";
 
 	return (
 		<div className={sidebarClasses}>
 			{/* Logo/brand section */}
 			<div className={logoClasses}>
-				<ChevronRight size={24} />
+				<MagicWandIcon className=" size-8 p-2"/>
 			</div>
 
 			{/* Main actions section */}

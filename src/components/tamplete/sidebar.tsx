@@ -18,8 +18,13 @@ interface SidebarItemProps {
 	path: string;
 	notification?: boolean;
 	isActive: boolean;
+	variant: "compact" | "full";
 }
-//sidebar-background,sidebar-text,sidebar-item:hover,item:active:background,text ,opacity
+
+// Interface for sidebar props
+interface SidebarProps {
+	variant?: "compact" | "full";
+}
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
 	icon,
@@ -27,41 +32,54 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	path,
 	notification = false,
 	isActive,
+	variant,
 }) => {
-	const itemBaseClasses =
-		"flex flex-col  items-center justify-center w-full py-2 px-3 select-none  ";
+	const itemBaseClasses = "flex select-none w-full py-2 px-3";
 	const itemTransitionClasses =
 		"transition-all duration-100 ease-in text-opacity-50 hover:text-opacity-100 text-white";
 	const activeItemClasses = "bg-white bg-opacity-100 rounded-md";
-	const inactiveItemClasses = "bg-white bg-opacity-0  rounded-md";
-	const activeTextClasses = "text-black ";
-	const inactiveTextClasses = " ";
-	const labelBaseClasses = "text-xs mt-1 ";
+	const inactiveItemClasses = "bg-white bg-opacity-0 rounded-md";
+	const activeTextClasses = "text-black";
+	const inactiveTextClasses = "";
+	
+	// Layout classes based on variant
+	const layoutClasses = 
+		variant === "compact" 
+			? "flex-col items-center justify-center" 
+			: "flex-row items-center space-x-3";
+	
+	// Label classes based on variant
+	const labelBaseClasses = 
+		variant === "compact" 
+			? "text-xs mt-1" 
+			: "text-sm font-medium";
+	
 	const activeLabelClasses = "text-black";
 	const inactiveLabelClasses = "";
 
 	return (
-		<Link to={path} className="w-full text-decoration-none ">
+		<Link to={path} className="w-full text-decoration-none">
 			<div
-				className={` 
+				className={`
           ${itemBaseClasses}
+          ${layoutClasses}
           ${itemTransitionClasses}
           ${isActive ? activeItemClasses : inactiveItemClasses}
         `}
 			>
 				<div
-					className={`relative  ${
+					className={`relative ${
 						isActive ? activeTextClasses : inactiveTextClasses
 					}`}
 				>
 					{icon}
-					{notification && (
+					{notification && variant === "compact" && (
 						<span
-							className={`absolute -top-1 -right-2 text-xs font-bold ${
+							className={`absolute -top-1 -right-2 ${
 								isActive ? activeTextClasses : inactiveTextClasses
 							}`}
 						>
-							<div className=" size-2 rounded-full bg-green-500"></div>
+							<div className="size-2 rounded-full bg-green-500"></div>
 						</span>
 					)}
 				</div>
@@ -73,6 +91,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 				>
 					{label}
 				</span>
+				{notification && variant === "full" && (
+					<div className="ml-auto">
+						<div className="size-2 rounded-full bg-green-500"></div>
+					</div>
+				)}
 			</div>
 		</Link>
 	);
@@ -87,9 +110,10 @@ interface SidebarSectionProps {
 		notification?: boolean;
 	}[];
 	pathname: string;
+	variant: "compact" | "full";
 }
 
-const SidebarSection: React.FC<SidebarSectionProps> = ({ items, pathname }) => {
+const SidebarSection: React.FC<SidebarSectionProps> = ({ items, pathname, variant }) => {
 	return (
 		<div className="flex flex-col items-center w-full px-2 space-y-1">
 			{items.map((item) => (
@@ -100,6 +124,7 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({ items, pathname }) => {
 						path={item.path}
 						notification={item.notification}
 						isActive={pathname === item.path}
+						variant={variant}
 					/>
 				</div>
 			))}
@@ -107,7 +132,7 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({ items, pathname }) => {
 	);
 };
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<SidebarProps> = ({ variant = "compact" }) => {
 	const location = useLocation();
 	const pathname = location.pathname;
 
@@ -115,12 +140,12 @@ const Sidebar: React.FC = () => {
 	const mainItems = [
 		{
 			icon: <HomeSVG size={20} />,
-			label: "home",
+			label: "Home",
 			path: "/",
 		},
 		{
-			icon:<DiscoverSVG size={20}/>,
-			label: "discover",
+			icon: <DiscoverSVG size={20} />,
+			label: "Discover",
 			path: "/discover",
 			notification: true,
 		},
@@ -129,47 +154,51 @@ const Sidebar: React.FC = () => {
 	const utilityItems = [
 		{
 			icon: <SettingsSVG size={20} />,
-			label: "settings",
+			label: "Settings",
 			path: "/settings",
 		},
 		{
 			icon: <Heart size={20} />,
-			label: "donate",
+			label: "Donate",
 			path: "/donate",
 		},
 		{
-			icon: <WalletSVG size={20}  />,
-			label: "wallet",
+			icon: <WalletSVG size={20} />,
+			label: "Wallet",
 			path: "/wallet",
 		},
 		{
 			icon: <UserCircleSVG size={20} />,
-			label: "about",
+			label: "About",
 			path: "/about",
 		},
 	];
 
 	// Named Tailwind classes for sidebar layout
-	const sidebarClasses =
-		"flex-col items-center  bg-black text-white h-full w-full pb-4 flex  opacity-0 md:opacity-100 transition-opacity ";
+	const sidebarBaseClasses = 
+		"flex flex-col items-center bg-black text-white h-full pb-4 opacity-0 md:opacity-100 transition-opacity";
+	
+	const sidebarWidthClasses = 
+		variant === "compact" ? "w-24" : "w-56";
+	
 	const logoClasses =
-		" cursor-pointer bg-blue-500 p-1 rounded-2xl flex item-center justify-center my-4  hover:bg-blue-600 transition-colors duration-300";
+		"cursor-pointer bg-black flex items-center justify-center my-4 transition-colors";
 
 	return (
-		<div className={sidebarClasses}>
+		<div className={`${sidebarBaseClasses} ${sidebarWidthClasses}`}>
 			{/* Logo/brand section */}
 			<div className={logoClasses}>
-				<MagicWandIcon className=" size-8 p-2"/>
+				{/* <MagicWandIcon className="size-8 p-2"/> */}
 			</div>
 
 			{/* Main actions section */}
-			<SidebarSection items={mainItems} pathname={pathname} />
+			<SidebarSection items={mainItems} pathname={pathname} variant={variant} />
 
 			{/* Spacer */}
 			<div className="flex-grow"></div>
 
 			{/* Utility section */}
-			<SidebarSection items={utilityItems} pathname={pathname} />
+			<SidebarSection items={utilityItems} pathname={pathname} variant={variant} />
 		</div>
 	);
 };

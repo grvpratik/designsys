@@ -81,7 +81,7 @@ importers:
         specifier: ^8.3.0
         version: 8.6.0(react@18.3.1)
       framer-motion:
-        specifier: ^11.11.9
+        specifier: ^11.18.2
         version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
         specifier: ^0.453.0
@@ -102,7 +102,7 @@ importers:
         specifier: ^9.0.1
         version: 9.1.0(@types/react@18.3.20)(react@18.3.1)
       react-router-dom:
-        specifier: ^6.26.2
+        specifier: ^6.30.0
         version: 6.30.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts:
         specifier: ^2.15.0

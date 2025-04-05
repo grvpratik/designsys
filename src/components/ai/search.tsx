@@ -106,7 +106,7 @@ const SearchUI = ({
 						</button>
 					</div>
 					<button className=" size-8 aspect-square flex items-center justify-center rounded-full bg-white">
-						<Sparkles className="text-black p-0.5" />
+						<Sparkles className="text-black p-0.5"  strokeWidth={1}/>
 					</button>
 				</div>
 			</div>

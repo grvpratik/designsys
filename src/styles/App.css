@@ -117,9 +117,12 @@
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
   /* z-index: 999; */
 }
-
-
-  
+/* 
+*::selection {
+        background-color: bg-yellow-300; 
+        color: text-black; 
+    }
+   */
 
 
 

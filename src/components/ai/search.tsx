@@ -1,34 +1,41 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, type FC } from "react";
 import { cn } from "../../lib/utils";
-import {
-	ArrowUp,
-	Globe,
-	Option,
-	OptionIcon,
-	Plus,
-	Sparkle,
-	Sparkles,
-} from "lucide-react";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { Sparkles, XIcon } from "lucide-react";
 import { GlobeSVG, ImageFrameSVG, NewChatSVG, ReloadSVG } from "../svg";
-interface SearchUIProps{
+
+const SearchBtn =
+	"size-6 p-1 flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100";
+
+// Status type for the component
+export type SearchStatus = "ready" | "streaming" | "submitted" | "error";
+
+// Props interface with better typing
+interface SearchUIProps {
 	input: string;
 	handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	setError: (error: Error | null) => void;
 	className?: string;
 	onSubmit?: () => void;
-	status?: "ready" | "streaming" | "submitted"||"error";
+	status: SearchStatus;
 	disabled?: boolean;
 	disableAutosize?: boolean;
 	maxHeight?: number | string;
 	placeholder?: string;
 	title?: string;
 	subtitle?: string;
+	showHeader?: boolean;
+	// showFooter?: boolean;
+	customFooterButtons?: React.ReactNode;
+	onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+	stop: () => void;
 }
-const SearchUI = React.FC<SearchUIProps>({
+
+const SearchUI: FC<SearchUIProps> = ({
 	maxHeight = 140,
+	setError,
 	input,
 	handleInputChange,
-	className="",
+	className = "",
 	onSubmit,
 	status,
 	disabled = false,
@@ -36,93 +43,108 @@ const SearchUI = React.FC<SearchUIProps>({
 	placeholder = "What does this code do?",
 	title = "Working with Xcode & Terminal",
 	subtitle = "Focused on lines 78 -103",
+	showHeader = false,
+	// showFooter = true,
+	customFooterButtons,
+	onKeyDown,
+	stop,
 	...props
 }) => {
-	const textareaRef = useRef(null);
-
+	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	useEffect(() => {
-		if (disableAutosize) return;
-		if (!textareaRef.current) return;
+		if (disableAutosize || !textareaRef.current) return;
 
 		textareaRef.current.style.height = "auto";
 		textareaRef.current.style.height =
 			typeof maxHeight === "number"
 				? `${Math.min(textareaRef.current.scrollHeight, maxHeight)}px`
 				: `min(${textareaRef.current.scrollHeight}px, ${maxHeight})`;
-	}, [value, maxHeight, disableAutosize]);
+	}, [input, maxHeight, disableAutosize]);
 
-	const handleKeyDown = (e) => {
+	const handleKeyDownInternal = (
+		e: React.KeyboardEvent<HTMLTextAreaElement>
+	) => {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
+			if (disabled) return;
+			setError(null);
 			onSubmit?.();
 		}
-		props.onKeyDown?.(e);
+		onKeyDown?.(e);
 	};
 
 	return (
 		<div className="flex w-full max-w-xl mx-auto pb-1">
-			<div className="w-full bg-black/90 rounded-3xl p-1  overflow-hidden   custom-shadowx">
-				{/* Header */}
-				{/* <div className="flex items-center px-4 py-3 rounded-t-[20px] rounded-b-sm gap-3 border-b bg-white/20  backdrop-blur-md border-slate-700/30">
-					<div className="h-8 w-8 rounded-lg bg-blue-500 flex items-center justify-center">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							className="w-5 h-5 text-white transition-all"
-						>
-							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-						</svg>
-					</div>
-					<div className="flex-1">
-						<div className="font-medium text-white transition-all text-sm">
-							{title}
+			<div className="w-full bg-black/90 rounded-3xl p-1 overflow-hidden custom-shadowx">
+				{/* Optional Header */}
+				{showHeader && (
+					<div className="flex items-center px-4 py-3 rounded-t-[20px] rounded-b-sm gap-3 border-b bg-white/20 backdrop-blur-md border-slate-700/30">
+						<div className="h-8 w-8 rounded-lg bg-blue-500 flex items-center justify-center">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								className="w-5 h-5 text-white transition-all"
+							>
+								<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+							</svg>
 						</div>
-						<div className="text-slate-400 text-xs">{subtitle}</div>
+						<div className="flex-1">
+							<div className="font-medium text-white transition-all text-sm">
+								{title}
+							</div>
+							<div className="text-slate-400 text-xs">{subtitle}</div>
+						</div>
+						<button className="px-3 py-1 rounded-md text-sm text-white transition-all bg-slate-700 hover:bg-slate-600">
+							Stop
+						</button>
 					</div>
-					<button className="px-3 py-1 rounded-md text-sm text-white transition-all bg-slate-700 hover:bg-slate-600">
-						Stop
-					</button>
-				</div> */}
+				)}
 
 				{/* Content */}
-				<div className="px-4 pt-3 pb-2">
+				<div className="pl-4 pr-2 pt-3 pb-2">
 					<textarea
 						ref={textareaRef}
 						value={input}
 						onChange={handleInputChange}
-						onKeyDown={handleKeyDown}
+						onKeyDown={handleKeyDownInternal}
 						placeholder={placeholder}
 						className={cn(
-							"w-full rounded-lg custom-scrollbar min-h-[44px] resize-none border-none bg-transparent text-white transition-all placeholder:text-slate-500 text-base outline-none",
+							"w-full rounded-lg custom-scrollbar min-h-[44px] resize-none border-none bg-transparent text-white transition-all placeholder:text-slate-500 text-base outline-none ",
 							className
 						)}
 						rows={1}
-						disabled={disabled}
 						{...props}
 					/>
 				</div>
 
-				{/* Footer */}
-				<div className="flex items-center w-full   justify-between pl-3 pr-1 pb-1 border-t pt-1 rounded-b-[20px] border-slate-700/30">
+				{/* Optional Footer */}
+
+				<div className="flex items-center w-full justify-between pl-3 pr-1 pb-1 border-t pt-1 rounded-b-[20px] border-slate-700/30">
 					<div className="flex gap-3 h-8 items-center">
-						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<ImageFrameSVG />
-						</button>
-						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<GlobeSVG />
-						</button>
-						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<ReloadSVG />
-						</button>
-						<button className="size-6 p-1  flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100 ">
-							<NewChatSVG className="" />
-						</button>
+						{customFooterButtons || (
+							<>
+								<button className={SearchBtn}>
+									<ImageFrameSVG />
+								</button>
+								<button className={SearchBtn}>
+									<GlobeSVG />
+								</button>
+								<button className={SearchBtn}>
+									<ReloadSVG />
+								</button>
+								<button className={SearchBtn}>
+									<NewChatSVG />
+								</button>
+							</>
+						)}
 					</div>
-					<button className=" size-8 aspect-square flex items-center justify-center rounded-full bg-white">
-					{status==="ready" &&<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>}
-						{status==="streaming" || status==="submitted" &&<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>}		
+					<button
+						disabled={disabled}
+						className="size-8 aspect-square flex items-center justify-center rounded-full bg-white disabled:cursor-not-allowed disabled:opacity-50 "
+					>
+						<Sparkles className={cn("text-black p-0.5",status==='submitted' ?"  p-1 animate-pulse":"")} strokeWidth={1.25} />
 					</button>
 				</div>
 			</div>

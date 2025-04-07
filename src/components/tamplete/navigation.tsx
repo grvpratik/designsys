@@ -46,7 +46,7 @@ export default function Navigation() {
 						>
 							<Icon size={24} strokeWidth={active ? 2.5 : 2} />
 
-							{/* <span className="text-xs mt-1">{label}</span> */}
+							<span className="text-xs mt-1">{label}</span>
 						</Link>
 					);
 				})}

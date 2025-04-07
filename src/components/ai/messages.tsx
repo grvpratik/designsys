@@ -1,8 +1,10 @@
 import React from "react";
 import SearchUI from "./search";
 import { Separator } from "../ui/separator";
+import IridescentSphere from "../ui/circle";
+import { AirVent, Brain, User } from "lucide-react";
 
-const MessagesUI = () => {
+const ChatMessages = () => {
 	// Dummy data for messages
 	const messages = [
 		{ role: "user", content: "Hello, how can you help me today?" },
@@ -26,35 +28,32 @@ const MessagesUI = () => {
 	];
 
 	return (
-		<div className="w-full h-full flex flex-col">
+		<div className="  mx-auto w-full flex flex-col items-center h-full overflow-y-auto  flex-1 ">
 			{/* Sticky Header */}
-			<div className="sticky top-0 bg-white/40 backdrop-blur-lg p-2 md:p-4  z-10">
-				<h1 className="text-lg md:text-xl font-bold ">
-					Chat with Claude
-				</h1>
+			<div className=" max-w-2xl"><div className="sticky top-0 bg-white/40 backdrop-blur-lg p-2 md:p-4  z-10">
+				<h1 className="text-lg md:text-xl font-bold ">new title</h1>
 			</div>
 
 			{/* Messages Container */}
-			<div className="flex flex-col  flex-grow overflow-y-auto p-4 ">
+			<div className="flex flex-col    p-4 ">
 				{messages.map((message, index) => (
 					<div key={index} className="flex flex-col">
 						{/* Message */}
 						<div className="flex items-start gap-4">
 							{/* Icon - Different icons for user vs AI */}
-							<div
-								className={`rounded-lg w-10 h-10 flex items-center justify-center  flex-shrink-0 ${
-									message.role === "user"
-										? "bg-gray-700 text-white"
-										: "bg-purple-600 text-white"
-								}`}
-							>
-								<span className="text-xs font-bold">
-									{message.role === "user" ? "U" : "AI"}
-								</span>
-							</div>
+							{message.role === "user" ? (
+								<div className="w-10 h-10 flex-shrink-0 ">
+									<User/>
+								</div>
+							) : (
+								<div className="w-10 h-10 flex-shrink-0 bg-blue-500 rounded-full flex items-center justify-center">
+									<Brain/>
+								</div>
+							)}
+							
 
 							{/* Message Bubble */}
-                            
+
 							<div
 								className={`  max-w-3xl flex-1 paragraph-md  ${
 									message.role === "user" ? "" : ""
@@ -70,11 +69,10 @@ const MessagesUI = () => {
 						{/* Separator (except for the last message) */}
 					</div>
 				))}
-			</div>
-
-			{/* Input Area - Fixed at bottom */}
+			</div></div>
+			
 		</div>
 	);
 };
 
-export default MessagesUI;
+export default ChatMessages;

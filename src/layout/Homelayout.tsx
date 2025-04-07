@@ -24,7 +24,7 @@ export default function RootLayout() {
 
 					<main
 						className={cn(
-							"flex-1 relative flex mb-16 rounded-l-2xl md:mb-0 flex-col w-full transition-all duration-100 ease-in-out overflow-y-auto h-full overflow-hidden bg-stone-100",
+							"flex-1 relative flex mb-16 rounded-l-2xl md:mb-0 flex-col w-full transition-all duration-100 ease-in-out overflow-y-auto h-full overflow-hidden  bg-stone-100",
 							sidebarVarient === "compact" ? "md:ml-24" : "md:ml-56"
 						)}
 					>

@@ -46,8 +46,8 @@ const SearchUI = ({
 	};
 
 	return (
-		<div className="flex w-full max-w-3xl mx-auto">
-			<div className="w-full bg-black/90 rounded-3xl p-1  overflow-hidden backdrop-blur-sm  custom-shadowx">
+		<div className="flex w-full max-w-xl mx-auto pb-1">
+			<div className="w-full bg-black/90 rounded-3xl p-1  overflow-hidden   custom-shadowx">
 				{/* Header */}
 				{/* <div className="flex items-center px-4 py-3 rounded-t-[20px] rounded-b-sm gap-3 border-b bg-white/20  backdrop-blur-md border-slate-700/30">
 					<div className="h-8 w-8 rounded-lg bg-blue-500 flex items-center justify-center">
@@ -106,7 +106,7 @@ const SearchUI = ({
 						</button>
 					</div>
 					<button className=" size-8 aspect-square flex items-center justify-center rounded-full bg-white">
-						<Sparkles className="text-black p-0.5"  strokeWidth={1}/>
+						<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>
 					</button>
 				</div>
 			</div>

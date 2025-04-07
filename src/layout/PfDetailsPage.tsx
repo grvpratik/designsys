@@ -10,6 +10,7 @@ import { TabGroup } from "./../components/tab-group";
 import { DataRow } from "./../components/data-row";
 import { CryptoLogo } from "./../components/crypto-logo";
 import { Badge } from "./../components/badge";
+import PriceChartDemo from "../components/temp-chart";
 
 // Mock data for the detail view
 const mockData = {
@@ -78,7 +79,7 @@ export default function PFDetailPage() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.5 }}
-			className="bg-black text-white  w-full"
+			className="bg-black/90 text-white  w-full overflow-y-auto"
 		>
 			<div className="p-4 max-w-3xl mx-auto ">
 				{/* Header with navigation buttons */}
@@ -113,24 +114,7 @@ export default function PFDetailPage() {
 				</div>
 
 				{/* Price Chart Section */}
-				<InfoCard className="mb-6">
-					<div className="flex flex-col">
-						<span className="text-gray-400 text-sm">price</span>
-						<span className="text-xl font-bold">{itemData.price}</span>
-					</div>
-
-					{/* Simple SVG Chart */}
-					<div className="mt-2 h-16">
-						<svg width="100%" height="100%" viewBox="0 0 300 60">
-							<path
-								d="M0,30 C20,40 40,20 60,25 C80,30 100,35 120,30 C140,25 160,15 180,10 C200,5 220,20 240,35 C260,50 280,45 300,40"
-								fill="none"
-								stroke="white"
-								strokeWidth="2"
-							/>
-						</svg>
-					</div>
-				</InfoCard>
+				<PriceChartDemo/>
 
 				{/* Tabs */}
 				<TabGroup

@@ -114,7 +114,7 @@ export default function Discover() {
 							Select category
 						</span>
 						{/* Tab buttons with active states */}
-						<div className="flex gap-2 mt-1">
+						<div className="flex gap-2 mt-1 flex-col max-w-xs">
 							<button
 								onClick={() => setActiveTab("pf")}
 								className={`px-4 py-1.5 rounded-full text-sm transition-all ${

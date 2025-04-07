@@ -6,17 +6,16 @@ import {
 	HomeSVG,
 	SettingsSVG,
 	UserCircleSVG,
-	UserSVG,
 	WalletSVG,
 } from "../svg";
 import { List } from "lucide-react";
 
 const navItems = [
-	{ label: "home", icon: HomeSVG, path: "/" },
-	{ label: "history", icon:List, path: "/history" },
-	{ label: "discover", icon: DiscoverSVG, path: "/discover" },
-	{ label: "setting", icon: SettingsSVG, path: "/rf" },
-	{ label: "wallet", icon: UserCircleSVG, path: "/social" },
+	{ label: "Home", icon: HomeSVG, path: "/" },
+	{ label: "History", icon: List, path: "/history" },
+	{ label: "Discover", icon: DiscoverSVG, path: "/discover" },
+	{ label: "Setting", icon: SettingsSVG, path: "/rf" },
+	{ label: "Profile", icon: UserCircleSVG, path: "/social" },
 ];
 
 export default function Navigation() {
@@ -26,31 +25,30 @@ export default function Navigation() {
 		pathname === path || (path !== "/" && pathname.startsWith(path));
 
 	return (
-		<nav className="fixed bottom-0 z-5  flex flex-col  left-0 right-0 w-full   bg-black text-white  transition-transform duration-100 ease-in-out md:translate-y-[200%] translate-y-0">
-			<div className="mob    mx-auto w-full flex-1 px-2 sm:px-4  pt-2 pb-3 flex justify-between items-center gap-2  ">
-			
+		<nav className="fixed bottom-0 z-50 h-16 flex flex-col left-0 right-0 w-full bg-black text-white shadow-lg transition-transform duration-300 ease-in-out md:translate-y-full translate-y-0">
+			<div className="h-full mob max-w-md mx-auto w-full flex justify-between items-center px-4 py-1">
 				{navItems.map(({ label, icon: Icon, path }) => {
 					const active = isActive(path);
 					return (
 						<Link
 							key={path}
 							to={path}
-							className={`flex py-3 justify-center flex-col items-center max-w-24 w-full text-xs rounded-xl  transition-all duration-300 ease-in-out text-opacity-60 hover:text-opacity-100 
-								${
-								active
-									? "text-black bg-white text-opacity-100"
-									: "text-white bg-opacity-0"
-							} 
-							
-							`}
+							className={`flex flex-col items-center justify-center h-12 px-2 aspect-square rounded-lg transition-all duration-200 ease-in-out
+                ${
+									active
+										? "text-black bg-white font-medium"
+										: "text-white text-opacity-70 hover:text-opacity-100"
+								}
+              `}
+							aria-current={active ? "page" : undefined}
 						>
-							<Icon size={24} strokeWidth={active ? 2.5 : 2} />
-
-							<span className="text-xs mt-1">{label}</span>
+							<Icon size={22} strokeWidth={active ? 2 : 1.5} />
+							<span className="text-xs mt-1 truncate max-w-16">{label}</span>
 						</Link>
 					);
 				})}
 			</div>
+			<div className="h-1 bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-50" />
 		</nav>
 	);
 }

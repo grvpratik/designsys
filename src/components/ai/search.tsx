@@ -11,11 +11,26 @@ import {
 } from "lucide-react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { GlobeSVG, ImageFrameSVG, NewChatSVG, ReloadSVG } from "../svg";
-
-const SearchUI = ({
+interface SearchUIProps{
+	input: string;
+	handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	className?: string;
+	onSubmit?: () => void;
+	status?: "ready" | "streaming" | "submitted"||"error";
+	disabled?: boolean;
+	disableAutosize?: boolean;
+	maxHeight?: number | string;
+	placeholder?: string;
+	title?: string;
+	subtitle?: string;
+}
+const SearchUI = React.FC<SearchUIProps>({
 	maxHeight = 140,
-	className,
+	input,
+	handleInputChange,
+	className="",
 	onSubmit,
+	status,
 	disabled = false,
 	disableAutosize = false,
 	placeholder = "What does this code do?",
@@ -24,7 +39,7 @@ const SearchUI = ({
 	...props
 }) => {
 	const textareaRef = useRef(null);
-	const [value, setValue] = useState("");
+
 
 	useEffect(() => {
 		if (disableAutosize) return;
@@ -75,8 +90,8 @@ const SearchUI = ({
 				<div className="px-4 pt-3 pb-2">
 					<textarea
 						ref={textareaRef}
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
+						value={input}
+						onChange={handleInputChange}
 						onKeyDown={handleKeyDown}
 						placeholder={placeholder}
 						className={cn(
@@ -106,7 +121,8 @@ const SearchUI = ({
 						</button>
 					</div>
 					<button className=" size-8 aspect-square flex items-center justify-center rounded-full bg-white">
-						<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>
+					{status==="ready" &&<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>}
+						{status==="streaming" || status==="submitted" &&<Sparkles className="text-black p-0.5"  strokeWidth={1.25}/>}		
 					</button>
 				</div>
 			</div>

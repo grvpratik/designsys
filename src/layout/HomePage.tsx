@@ -17,8 +17,8 @@ export default function Home() {
 	};
 	// h-[calc(100vh-78px)]
 	return (
-		<div className=" w-full h-screen  ">
-			<GenerativeChat />
+		<>
+			<GenerativeChat id="lol" initialMessages={[]}/>
 			{/* <div className="flex flex-col items-start gap-2">
 					<h1 className=" title-h3">Hello,degen</h1>
 					<span className="paragraph-md opacity-75">
@@ -37,6 +37,6 @@ export default function Home() {
 				</div> */}
 
 			{/* <SearchUI /> */}
-		</div>
+		</>
 	);
 }

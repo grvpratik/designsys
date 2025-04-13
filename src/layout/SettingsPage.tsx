@@ -1,10 +1,10 @@
 import React from 'react'
-import ListOptions from '../components/settings/list-options'
+import ListOptions from '../components/pages/settings/list-options'
 
 const SettingsPage = () => {
   return (
     <div className='flex flex-col items-center '>
-        <ListOptions/>
+      //  <ListOptions/>
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import "./../styles/index.css";
-import MessagesUI from "../components/ai/messages";
+import MessagesUI from "../components/pages/ai/messages";
 import { Search } from "lucide-react";
-import SearchUI from "../components/ai/search";
+import SearchUI from "../components/pages/ai/search";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -10,7 +10,7 @@ const ChatDetailsPage = () => {
 	const location = useLocation();
 	return (
 		<div className="w-full h-full flex flex-col">
-			<div className="flex flex-col max-w-3xl w-full flex-1    mx-auto px-2 md:px-4 ">
+			<div className="flex flex-col max-w-2xl w-full flex-1    mx-auto px-2 md:px-4 ">
 				<motion.div
 					key={location.key}
 					initial={{ opacity: 0 }}

@@ -6,9 +6,19 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+@media (max-width: 768px) {
+  :root {
+    --rem: 150px;
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --rem: 100px;
+  }
+}
 :root {
   /* Typography Foundation Variables */
-  
+  --rem:200px;
   /* Title / H1 */
   --font-title-h1-weight: 500;
   --font-title-h1-size: 56px;

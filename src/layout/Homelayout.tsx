@@ -1,8 +1,9 @@
 import type React from "react";
-import Navigation from "../components/tamplete/navigation";
-import Sidebar from "../components/tamplete/sidebar";
+
 import { Outlet } from "react-router-dom";
 import { cn } from "../lib/utils";
+import Sidebar from "../components/nav/sidebar";
+import Navigation from "../components/nav/navigation";
 
 type SidebarVariant = "full" | "compact";
 
@@ -15,7 +16,7 @@ export default function RootLayout() {
 				<div className="flex h-screen">
 					<div
 						className={cn(
-							"min-h-screen fixed inset-y-0 left-0 -translate-x-full md:translate-x-0 transition-transform duration-100 ease-in-out z-40",
+							"min-h-screen fixed inset-y-0 left-0 -translate-x-full md:translate-x-0 transition-transform duration-100 ease-in-out z-20",
 							sidebarVarient === "compact" ? "w-24" : "w-56"
 						)}
 					>
@@ -24,7 +25,7 @@ export default function RootLayout() {
 
 					<main
 						className={cn(
-							"flex-1  relative flex pb-16 rounded-l-2xl md:pb-0 flex-col w-full transition-all duration-100 ease-in-out overflow-y-auto h-full overflow-hidden  bg-stone-100",
+							"flex-1  relative flex pb-16  md:pb-0 flex-col w-full transition-all duration-100 ease-in-out overflow-y-auto h-full overflow-hidden rounded-l-md rounded-r-md  bg-gray-100",
 							sidebarVarient === "compact" ? "md:ml-24" : "md:ml-56"
 						)}
 					>

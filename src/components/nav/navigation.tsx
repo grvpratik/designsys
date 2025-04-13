@@ -25,7 +25,7 @@ export default function Navigation() {
 		pathname === path || (path !== "/" && pathname.startsWith(path));
 
 	return (
-		<nav className="fixed bottom-0 z-50 h-16 flex flex-col left-0 right-0 w-full bg-black text-white shadow-lg transition-transform duration-300 ease-in-out md:translate-y-full translate-y-0">
+		<nav className="fixed bottom-0   h-16 flex flex-col left-0 right-0 w-full bg-black text-white shadow-lg transition-transform duration-300 ease-in-out md:translate-y-full translate-y-0">
 			<div className="h-full mob max-w-md mx-auto w-full flex justify-between items-center px-4 py-1">
 				{navItems.map(({ label, icon: Icon, path }) => {
 					const active = isActive(path);

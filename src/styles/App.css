@@ -87,6 +87,7 @@
 .scrollbar-hide {
   -ms-overflow-style: none;
 }
+
 /* Thin, rounded, gray scrollbar styling */
 *::-webkit-scrollbar {
   width: 6px;
@@ -123,6 +124,9 @@
         color: text-black; 
     }
    */
+button {
+  cursor: pointer !important;
+}
 
 
 
@@ -135,7 +139,7 @@
     @apply bg-background text-foreground;
     }
   }
-
+/* 
   .mob:before {
   content: "";
   position: absolute;
@@ -160,4 +164,4 @@
   background-color: transparent;
   box-shadow: 0 20px 0 0 black;
     z-index: -5;
-}
+} */

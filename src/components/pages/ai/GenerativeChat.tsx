@@ -7,9 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import ChatMessages from "./messages";
 
 import SearchUI from "./search";
-import useMobile from "../../lib/useMobile";
+
 import { Greeting } from "./greeting";
 import { MobileSourceDialog, SourcePanel } from "./source-pannel";
+import useMobile from "../../../lib/useMobile";
 
 // type ToolInvocation = {
 // 	toolCallId?: string;
@@ -65,30 +66,29 @@ const GenerativeChat = ({
 		},
 	});
 
-
 	// // Determine chat state for the ChatMessages component
 	// const chatState = {
 	// 	lastMessageIsAssistant:
 	// 		messages.length > 0 && messages[messages.length - 1].role === "assistant",
 	// };
- const closeSourcePanel = () => {
-	setSourceOpen(false);
-	setCurrentSourceMessage(null);
-};
-   const handleSourceClick = (message: Message) => {
-			if (currentSourceMessage?.id === message.id && sourceOpen) {
-				// If clicking the same message, close the panel
-				setSourceOpen(false);
-				setCurrentSourceMessage(null);
-			} else {
-				// Otherwise, open with the new message
-				setSourceOpen(true);
-				setCurrentSourceMessage(message);
-			}
-		};
+	const closeSourcePanel = () => {
+		setSourceOpen(false);
+		setCurrentSourceMessage(null);
+	};
+	const handleSourceClick = (message: Message) => {
+		if (currentSourceMessage?.id === message.id && sourceOpen) {
+			// If clicking the same message, close the panel
+			setSourceOpen(false);
+			setCurrentSourceMessage(null);
+		} else {
+			// Otherwise, open with the new message
+			setSourceOpen(true);
+			setCurrentSourceMessage(message);
+		}
+	};
 	return (
 		<div className="flex w-full h-full relative">
-			<div className="flex flex-col h-full w-full overflow-y-auto">
+			<div className="flex flex-col h-full w-full overflow-y-auto transition-all">
 				<AnimatePresence>
 					{messages.length === 0 ? (
 						<Greeting />
@@ -120,17 +120,35 @@ const GenerativeChat = ({
 			</div>
 
 			{!isMobile && (
-				<div
-					className={`absolute right-0 top-0 h-full w-[320px] transform transition-transform duration-300 ease-in-out ${
-						sourceOpen ? "translate-x-0" : "translate-x-full"
-					} md:block hidden`}
+				<motion.div
+					className={`h-full  transform transition-transform duration-300 ease-in-out ${
+						sourceOpen ? "translate-x-0 w-[320px] " : "translate-x-full w-0 "
+					}  `}
 				>
 					<SourcePanel
 						isOpen={sourceOpen}
 						onClose={closeSourcePanel}
 						currentMessage={currentSourceMessage}
 					/>
-				</div>
+				</motion.div>
+				// <motion.div
+				// 	className="h-full w-[320px] md:block hidden"
+				// 	animate={{
+				// 		width: sourceOpen ? 320 : 0,
+				// 		x: sourceOpen ? 0 : 320
+				// 	}}
+				// 	transition={{
+				// 		type: "spring",
+				// 		stiffness: 300,
+				// 		damping: 30
+				// 	}}
+				// >
+				// 	<SourcePanel
+				// 		isOpen={sourceOpen}
+				// 		onClose={closeSourcePanel}
+				// 		currentMessage={currentSourceMessage}
+				// 	/>
+				// </motion.div>
 			)}
 
 			{isMobile && (

@@ -81,7 +81,7 @@ export default function PFDetailPage() {
 			transition={{ duration: 0.5 }}
 			className="bg-black/90 text-white  w-full overflow-y-auto"
 		>
-			<div className="p-4 max-w-3xl mx-auto ">
+			<div className="p-4 max-w-2xl mx-auto ">
 				{/* Header with navigation buttons */}
 				<div className="flex items-center justify-between mb-6">
 					<IconButton as={Link} to="/discover" icon={<ArrowLeft size={20} />} />
@@ -114,7 +114,7 @@ export default function PFDetailPage() {
 				</div>
 
 				{/* Price Chart Section */}
-				<PriceChartDemo/>
+				<PriceChartDemo />
 
 				{/* Tabs */}
 				<TabGroup

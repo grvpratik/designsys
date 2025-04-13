@@ -1,261 +1,231 @@
+"use client";
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import PriceChartDemo from "../components/temp-chart";
-import ListOptions from "../components/settings/list-options";
-import { SearchSVG } from "../components/svg";
-import { Input } from "../components/ui/input";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
 
-// Mock data for the PF list
-const pfItems = [
+// Default side menu data
+const defaultSideMenu = [
 	{
-		id: "pumpfun",
-		name: "PumpFun",
-		description: "Decentralized meme token platform",
-		image: "/placeholder.svg",
-		change: "+12.5%",
-		positive: true,
+		title: "Main",
+		items: [
+			{ name: "Dashboard", icon: "📊" },
+			{ name: "Projects", icon: "📁" },
+			{ name: "Tasks", icon: "✓" },
+		],
 	},
 	{
-		id: "cryptokitties",
-		name: "CryptoKitties",
-		description: "Digital collectible cats on blockchain",
-		image: "/placeholder.svg",
-		change: "-3.2%",
-		positive: false,
-	},
-	{
-		id: "defi-protocol",
-		name: "DeFi Protocol",
-		description: "Yield farming and liquidity pools",
-		image: "/placeholder.svg",
-		change: "+8.7%",
-		positive: true,
-	},
-	{
-		id: "nft-marketplace",
-		name: "NFT Marketplace",
-		description: "Buy, sell, and trade digital collectibles",
-		image: "/placeholder.svg",
-		change: "+5.1%",
-		positive: true,
-	},
-	{
-		id: "dao-governance",
-		name: "DAO Governance",
-		description: "Decentralized autonomous organization",
-		image: "/placeholder.svg",
-		change: "-1.8%",
-		positive: false,
+		title: "Settings",
+		items: [
+			{ name: "Profile", icon: "👤" },
+			{ name: "Preferences", icon: "⚙️" },
+		],
 	},
 ];
 
-// Mock data for other tabs
-const raydiumItems = [
-	{
-		id: "ray-swap",
-		name: "RAY Swap",
-		description: "Automated market maker on Solana",
-		image: "/placeholder.svg",
-		change: "+9.3%",
-		positive: true,
-	},
-	{
-		id: "ray-farms",
-		name: "RAY Farms",
-		description: "Yield farming protocol on Solana",
-		image: "/placeholder.svg",
-		change: "+4.7%",
-		positive: true,
-	},
-];
+// Reusable Tab component
+function Tab({ label, isActive, onClick }) {
+	return (
+		<button
+			className={`border rounded-xl py-2 px-6 mr-3 transition-colors whitespace-nowrap ${
+				isActive
+					? "bg-blue-100 border-blue-400 text-blue-600"
+					: "border-gray-300 hover:bg-gray-100"
+			}`}
+			onClick={onClick}
+		>
+			{label}
+		</button>
+	);
+}
 
-const extraItems = [
-	{
-		id: "solana-nft",
-		name: "Solana NFT",
-		description: "NFT marketplace on Solana",
-		image: "/placeholder.svg",
-		change: "-2.1%",
-		positive: false,
-	},
-	{
-		id: "solana-defi",
-		name: "Solana DeFi",
-		description: "DeFi protocols on Solana",
-		image: "/placeholder.svg",
-		change: "+6.2%",
-		positive: true,
-	},
-];
+// Reusable SideMenu component
+function SideMenu({ title, items = [], activeItem, onItemClick }) {
+	return (
+		<div className="mb-6">
+			<h2 className="text-xs  mb-1 px-1 uppercase text-gray-500">
+				{title}
+			</h2>
+			<div className="space-y-1">
+				{items.map((item, index) => (
+					<button
+						key={index}
+						onClick={() => onItemClick(item.name)}
+						className={`flex items-center justify-between w-full p-1.5 text-sm rounded-lg transition-colors text-left ${
+							activeItem === item.name
+								? "bg-blue-100 text-blue-600  "
+								: "hover:bg-gray-100 text-gray-700"
+						}`}
+					>
+						<div className="flex items-center">
+							{item.icon ? (
+								<span className="mr-3">{item.icon}</span>
+							) : (
+								<div className="w-5 h-5 mr-3 flex items-center justify-center rounded-md bg-gray-100">
+									<span className="text-xs text-gray-500">
+										{item.name.charAt(0)}
+									</span>
+								</div>
+							)}
+							<span>{item.name}</span>
+						</div>
+						<ChevronRight
+							size={16}
+							className={`transition-opacity ${
+								activeItem === item.name ? "opacity-100" : "opacity-0"
+							}`}
+						/>
+					</button>
+				))}
+			</div>
+		</div>
+	);
+}
 
-export default function Discover() {
-	const [activeTab, setActiveTab] = useState("pf");
+// Reusable SideBar component
+function SideBar({ sideMenus = [], activeItem, onItemClick }) {
+	return (
+		<div className="h-full py-3 px-2">
+			{sideMenus.map((menu, index) => (
+				<SideMenu
+					key={index}
+					title={menu.title}
+					items={menu.items || []}
+					activeItem={activeItem}
+					onItemClick={onItemClick}
+				/>
+			))}
+		</div>
+	);
+}
 
-	// Function to get data based on active tab
-	const getTabData = () => {
-		switch (activeTab) {
-			case "raydium":
-				return raydiumItems;
-			case "extra":
-				return extraItems;
-			case "pf":
-			default:
-				return pfItems;
-		}
+// Mobile dropdown component
+function MobileDropdown({
+	items,
+	selectedItem,
+	onItemSelect,
+	isOpen,
+	onToggle,
+}) {
+	return (
+		<div className="relative mb-4">
+			<button
+				onClick={onToggle}
+				className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-xl bg-white shadow-sm"
+			>
+				<span>{selectedItem}</span>
+				<ChevronDown
+					size={18}
+					className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+				/>
+			</button>
+
+			{isOpen && (
+				<div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-xl shadow-lg">
+					{items.map((item, index) => (
+						<button
+							key={index}
+							className={`w-full text-left p-3 hover:bg-gray-100 ${
+								item.name === selectedItem ? "text-blue-600 font-medium" : ""
+							}`}
+							onClick={() => onItemSelect(item.name)}
+						>
+							<div className="flex items-center">
+								{item.icon && <span className="mr-3">{item.icon}</span>}
+								<span>{item.name}</span>
+							</div>
+						</button>
+					))}
+				</div>
+			)}
+		</div>
+	);
+}
+
+// Search component
+function SearchBar() {
+	return (
+		<div className="mb-6 relative">
+			<Search
+				size={18}
+				className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+			/>
+			<input
+				type="text"
+				placeholder="Search..."
+				className="w-full p-3 pl-10 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+			/>
+		</div>
+	);
+}
+
+// Main component
+export default function Discover({ sideMenus = defaultSideMenu }) {
+	const [activeTab, setActiveTab] = useState(0);
+	const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+	const [activeItem, setActiveItem] = useState(
+		sideMenus[0]?.items[0]?.name || ""
+	);
+
+	const tabs = ["Overview", "Activity", "Settings"];
+	const allItems = sideMenus.flatMap((menu) => menu.items);
+
+	const handleItemClick = (itemName) => {
+		setActiveItem(itemName);
+		setMobileDropdownOpen(false);
 	};
 
 	return (
-		<div className="flex w-full h-full">
-			<div className="max-w-xs mx-4 w-full flex flex-col items-start my-6">
-				<div className="w-full max-w-xs items-start title-h5 my-2 flex-col text-start flex">
-					<span className="text-2xl font-semibold mb-2">Discover</span>
-					<div className="w-full">
-						<span className="text-sm text-gray-500 mb-2 block">
-							Select category
-						</span>
-						{/* Tab buttons with active states */}
-						<div className="flex gap-2 mt-1 flex-col max-w-xs">
-							<button
-								onClick={() => setActiveTab("pf")}
-								className={`px-4 py-1.5 rounded-full text-sm transition-all ${
-									activeTab === "pf"
-										? "bg-blue-500 text-white"
-										: "bg-gray-200 hover:bg-gray-300 text-gray-700"
-								}`}
-							>
-								PF
-							</button>
-							<button
-								onClick={() => setActiveTab("raydium")}
-								className={`px-4 py-1.5 rounded-full text-sm transition-all ${
-									activeTab === "raydium"
-										? "bg-blue-500 text-white"
-										: "bg-gray-200 hover:bg-gray-300 text-gray-700"
-								}`}
-							>
-								Raydium
-							</button>
-							<button
-								onClick={() => setActiveTab("extra")}
-								className={`px-4 py-1.5 rounded-full text-sm transition-all ${
-									activeTab === "extra"
-										? "bg-blue-500 text-white"
-										: "bg-gray-200 hover:bg-gray-300 text-gray-700"
-								}`}
-							>
-								Extra
-							</button>
-						</div>
-					</div>
-				</div>
-				{/* <div className="w-full mt-4">
-					
-					<div className="space-y-2 w-full">
-						{getTabData().map((item) => (
-							<div
-								key={item.id}
-								className="p-3 rounded-lg bg-white border border-gray-200 hover:border-blue-300 cursor-pointer transition-all"
-							>
-								<div className="flex items-center gap-3">
-									<div className="w-10 h-10 bg-gray-100 rounded-md overflow-hidden">
-										<img
-											src={item.image}
-											alt={item.name}
-											className="w-full h-full object-cover"
-										/>
-									</div>
-									<div className="flex-1">
-										<h3 className="font-medium">{item.name}</h3>
-										<p className="text-xs text-gray-500">{item.description}</p>
-									</div>
-									<div
-										className={`text-sm font-medium ${
-											item.positive ? "text-green-500" : "text-red-500"
-										}`}
-									>
-										{item.change}
-									</div>
-								</div>
-							</div>
-						))}
-					</div>
-				</div> */}
+		<div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+
+
+			{/* Sidebar - hidden on mobile */}
+			<div className="hidden md:block w-64 mx-2  bg-white">
+				<h1 className="text-xl font-bold px-4 py-4">Discover</h1>
+				<SideBar
+					sideMenus={sideMenus}
+					activeItem={activeItem}
+					onItemClick={handleItemClick}
+				/>
 			</div>
-			<div className="flex flex-col flex-1 overflow-y-auto">
-				<div className="max-w-xl  flex flex-col mx-4 my-3 w-full gap-3">
-					<div className="w-full rounded-full bg-gray-200/60 hover:bg-gray-200 transition-all duration-100 delay-75 ease-linear group">
-						<div className="flex w-full h-12 px-4 items-center">
-							<SearchSVG
-								strokeWidth={2.5}
-								// size={16}
-								className="mr-2 p-0.5 group-hover:opacity-60 opacity-60 transition-all duration-100 delay-75 ease-linear"
-							/>
-							<input
-								placeholder="Search"
-								className="bg-transparent text-base w-full py-1 flex-1"
-							/>
-						</div>
-					</div>
-					<div className="bg-emerald-200 h-36 w-full rounded-3xl flex items-center px-4"></div>
+			{/* Mobile header */}
+			<div className="md:hidden flex items-center justify-between p-2 border-b border-gray-200 bg-white">
+				<h1 className="text-xl font-bold">Discover</h1>
+			</div>
+			{/* Main content area */}
+			<div className="flex-1 flex flex-col p-6 max-w-3xl  w-full">
+				{/* Mobile dropdown - only shown on mobile */}
+				<div className="md:hidden">
+					<MobileDropdown
+						items={allItems}
+						selectedItem={activeItem}
+						onItemSelect={handleItemClick}
+						isOpen={mobileDropdownOpen}
+						onToggle={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+					/>
+				</div>
 
-					{/* Tab content container */}
-					<div className="mt-4">
-						<div className="flex items-center justify-between mb-4">
-							<h2 className="text-xl font-semibold">
-								{activeTab === "pf" && "PumpFun Projects"}
-								{activeTab === "raydium" && "Raydium Projects"}
-								{activeTab === "extra" && "Extra Projects"}
-							</h2>
-							<div className="flex gap-2">
-								<button className="text-sm bg-gray-100 px-3 py-1 rounded-md hover:bg-gray-200">
-									Filter
-								</button>
-								<button className="text-sm bg-gray-100 px-3 py-1 rounded-md hover:bg-gray-200">
-									Sort
-								</button>
-							</div>
-						</div>
+				{/* Search bar */}
+				<SearchBar />
 
-						{/* Grid layout for tab content */}
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							{getTabData().map((item) => (
-								<div
-									key={item.id}
-									className="p-4 rounded-xl bg-white border border-gray-200 hover:shadow-md transition-all"
-								>
-									<div className="flex items-center gap-3 mb-3">
-										<div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
-											<img
-												src={item.image}
-												alt={item.name}
-												className="w-full h-full object-cover"
-											/>
-										</div>
-										<div>
-											<h3 className="font-semibold">{item.name}</h3>
-											<p className="text-sm text-gray-500">
-												{item.description}
-											</p>
-										</div>
-									</div>
-									<div className="flex justify-between items-center mt-3">
-										<span className="text-sm text-gray-500">24h Change</span>
-										<span
-											className={`font-medium ${
-												item.positive ? "text-green-500" : "text-red-500"
-											}`}
-										>
-											{item.change}
-										</span>
-									</div>
-									<div className="mt-3 pt-3 border-t border-gray-100">
-										<button className="w-full py-1.5 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">
-											<Link to={"/discover/pumpfun"}> View Details</Link>
-										</button>
-									</div>
-								</div>
-							))}
-						</div>
+				{/* Tabs */}
+				<div className="flex mb-6 overflow-x-auto">
+					{tabs.map((tab, index) => (
+						<Tab
+							key={index}
+							label={tab}
+							isActive={activeTab === index}
+							onClick={() => setActiveTab(index)}
+						/>
+					))}
+				</div>
+
+				{/* Content area */}
+				<div className="flex-1 border border-gray-300 rounded-xl p-6 flex items-center justify-center bg-white shadow">
+					<div className="text-center">
+						<h2 className="text-xl font-semibold mb-2">{activeItem}</h2>
+						<p className="text-gray-600">
+							{tabs[activeTab]} content for {activeItem}
+						</p>
 					</div>
 				</div>
 			</div>

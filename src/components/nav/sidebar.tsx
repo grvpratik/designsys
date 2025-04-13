@@ -36,7 +36,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 }) => {
 	const itemBaseClasses = "flex select-none w-full py-2 px-3";
 	const itemTransitionClasses =
-		"transition-all duration-100 ease-in text-opacity-50 hover:text-opacity-100 text-white";
+		"transition-all  ease-in text-opacity-50 hover:text-opacity-100 text-white";
 	const activeItemClasses = "bg-white bg-opacity-100 rounded-md";
 	const inactiveItemClasses = "bg-white bg-opacity-0 rounded-md";
 	const activeTextClasses = "text-black";

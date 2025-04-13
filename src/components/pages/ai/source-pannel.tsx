@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { Button } from "../../ui/button";
+import { Dialog, DialogContent } from "../../ui/dialog";
 
 import { Message } from "@ai-sdk/react";
 

@@ -88,6 +88,7 @@ const GenerativeChat = ({
 	};
 	return (
 		<div className="flex w-full h-full relative">
+			<div className=" fixed hidden md:flex justify-between top-0 left-0 right-0 w-full h-8 px-4 py-2"> <div className=" ml-24 title-h6 font-bold font-mono text-stone-600">CrossBit</div><appkit-button/></div>
 			<div className="flex flex-col h-full w-full overflow-y-auto transition-all">
 				<AnimatePresence>
 					{messages.length === 0 ? (

@@ -36,7 +36,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
 		<div className="mx-auto w-full flex flex-col items-center h-full overflow-y-auto flex-1">
 			{/* Sticky Header */}
 			<div className="max-w-2xl w-full">
-				<div className="sticky top-0 z-30 bg-gradient-to-b from-gray-100 via-gray-100/90 to-transparent rounded-b-md">
+				<div className="sticky top-0 z-30 bg-gradient-to-b from-gray-100 via-gray-100 to-gray-100/50 rounded-b-md">
 					<div className="flex w-full items-center p-1.5 gap-1 md:p-3 rounded-md">
 						<div>
 							<Star className="size-4" />

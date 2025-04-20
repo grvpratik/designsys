@@ -1,12 +1,8 @@
 import type React from "react";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
-import { ModeToggle } from "../components/mode-toggle";
+import GenerativeChat from "../pages/ai/GenerativeChat";
 
-import SearchUI from "../components/pages/ai/search";
-import MessagesUI from "../components/pages/ai/messages";
-import GenerativeChat from "../components//pages/ai/GenerativeChat";
 export default function Home() {
 	const [searchQuery, setSearchQuery] = useState("");
 

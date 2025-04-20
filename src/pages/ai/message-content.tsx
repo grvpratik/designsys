@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import { Clapperboard, ExternalLink, Loader, User, User2 } from "lucide-react";
 import { ReactNode } from "react";
 import { MemoizedMarkdown } from "./memoized-markdown";
-import { cn } from "../../../lib/utils";
-import { Button } from "../../ui/button";
-import { Separator } from "../../ui/separator";
-import defaultAvatar from "../../../assets/react.svg";
+
+import defaultAvatar from "@/assets/react.svg";
+import { cn } from "../../lib/utils";
+import { Separator } from "../../components/ui/separator";
+import { Button } from "../../components/ui/button";
 
 type MessageIconProps = {
 	role: "user" | "assistant";

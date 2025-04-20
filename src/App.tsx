@@ -12,14 +12,22 @@ import PFDetailPage from "./layout/PfDetailsPage";
 
 import ChatDetailsPage from "./layout/ChatDetails";
 import SettingsPage from "./layout/SettingsPage";
+import WalletProvider from "./components/wallet-provider";
 
 function App() {
 	return (
-		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-			<BrowserRouter>
-				<RoutesWrapper />
-			</BrowserRouter>
-		</ThemeProvider>
+		<html>
+			<head>
+				
+			</head>
+			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+				<WalletProvider>
+					<BrowserRouter>
+						<RoutesWrapper />
+					</BrowserRouter>
+				</WalletProvider>
+			</ThemeProvider>
+		</html>
 	);
 }
 

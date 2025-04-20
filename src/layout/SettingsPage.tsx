@@ -1,5 +1,6 @@
 import React from 'react'
-import ListOptions from '../components/pages/settings/list-options'
+import ListOptions from '../pages/settings/list-options'
+
 
 const SettingsPage = () => {
   return (

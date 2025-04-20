@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { scan } from "react-scan";
 type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
@@ -32,7 +32,7 @@ export function ThemeProvider({
 
 	useEffect(() => {
 		const root = window.document.documentElement;
-
+		
 		root.classList.remove("light", "dark");
 
 		if (theme === "system") {

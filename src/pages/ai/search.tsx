@@ -1,7 +1,7 @@
 import { useEffect, useRef, type FC } from "react";
-import { cn } from "../../../lib/utils";
+import { cn } from "../../lib/utils";
 import { Sparkles, XIcon } from "lucide-react";
-import { GlobeSVG, ImageFrameSVG, NewChatSVG, ReloadSVG } from "../../svg";
+import { GlobeSVG, ImageFrameSVG, NewChatSVG, ReloadSVG } from "./../../components/svg/index"
 
 const SearchBtn =
 	"size-6 p-1 flex items-center justify-center rounded-full text-white transition-all opacity-60 hover:opacity-100";

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { ExternalLink, Share2 } from "lucide-react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { IconButton } from "./components/icon-button";
-import { InfoCard } from "./components/info-card";
-import { TabGroup } from "./components/tab-group";
-import { DataRow } from "./components/data-row";
-import { CryptoLogo } from "./components/crypto-logo";
-import { Badge } from "./components/badge";
+import { IconButton } from "./icon-button";
+import { InfoCard } from "./info-card";
+import { TabGroup } from "./tab-group";
+import { DataRow } from "./data-row";
+import { CryptoLogo } from "./crypto-logo";
+import { Badge } from "./badge";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 // Mock data for the detail view
@@ -85,7 +85,7 @@ export default function PFDetailPage() {
 					<IconButton
 						as={Link}
 						to="/discover"
-						icon={<ArrowLeftIcon size={20} />}
+						icon={<ArrowLeftIcon width={20} />}
 					/>
 					<div className="flex gap-2">
 						<IconButton icon={<Share2 size={20} />} onClick={() => {}} />

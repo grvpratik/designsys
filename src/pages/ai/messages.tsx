@@ -5,8 +5,8 @@ import { useRef, useEffect } from "react";
 import { Info, Share, Sparkles, Star } from "lucide-react";
 import { Message } from "@ai-sdk/react";
 import { MessageContent } from "./message-content";
-import { Separator } from "../../ui/separator";
-import { Button } from "../../ui/button";
+import { Button } from "../../components/ui/button";
+import { Separator } from "../../components/ui/separator";
 
 interface ChatMessagesProps {
 	messages: Message[];
@@ -35,7 +35,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
 	return (
 		<div className="mx-auto w-full flex flex-col items-center h-full overflow-y-auto flex-1">
 			{/* Sticky Header */}
-			<div className="max-w-2xl w-full">
+			<div className=" w-full">
 				<div className="sticky top-0 z-30 bg-gradient-to-b from-gray-100 via-gray-100 to-gray-100/50 rounded-b-md">
 					<div className="flex w-full items-center p-1.5 gap-1 md:p-3 rounded-md">
 						<div>
@@ -59,7 +59,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
 				</div>
 
 				{/* Messages Container */}
-				<div className="flex flex-col p-4 w-full">
+				<div className="flex max-w-2xl  mx-auto flex-col p-4 w-full">
 					{messages.map((message, index) => {
 						const isStreaming =
 							index === messages.length - 1 &&
@@ -108,7 +108,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
 					{error && (
 						<div className="flex items-center gap-4 mb-4">
 							<div className="w-10 h-10 flex-shrink-0 bg-red-500 rounded-full flex items-center justify-center text-white">
-								<Info/>
+								<Info />
 							</div>
 							<div className="max-w-2xl flex-1 paragraph-md bg-red-50 p-3 rounded-lg text-red-600">
 								Error: {error.message}

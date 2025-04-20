@@ -1,10 +1,9 @@
 import React from "react";
 import "./../styles/index.css";
-import MessagesUI from "../components/pages/ai/messages";
-import { Search } from "lucide-react";
-import SearchUI from "../components/pages/ai/search";
+
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import SearchUI from "../pages/ai/search";
 
 const ChatDetailsPage = () => {
 	const location = useLocation();
@@ -18,7 +17,7 @@ const ChatDetailsPage = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.5 }}
 				>
-					{" "}
+					
 					<MessagesUI />
 				</motion.div>
 				<div className="sticky bottom-0 left-0 right-0 w-full  pb-2">
